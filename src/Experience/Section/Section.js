@@ -33,6 +33,8 @@ export default class Section
     setMesh()
     {
         this.mesh = new THREE.Mesh(this.geometry, this.material)
+        this.mesh.scale.set(0.5, 0.5, 0.5)
+        this.mesh.position.set(3.5, 0, 0)
         this.scene.add(this.mesh)
     }
 
@@ -45,8 +47,16 @@ export default class Section
 
     setButton()
     {
-        this.gap = 5
-        this.size = 1
+        this.gap = 2.5
+        this.size = 0.5
         this.button = new Button(this.mesh.position, this.size, this.gap)
+    }
+
+    update()
+    {
+        if(this.button)
+        {
+        this.button.update()
+    }
     }
 }
