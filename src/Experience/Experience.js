@@ -25,6 +25,7 @@ export default class Experience
         this.debug = new Debug()
         this.sizes = new Sizes()
         this.time = new Time()
+
         this.scene = new THREE.Scene()
         this.camera = new Camera()
         this.renderer = new Renderer()
