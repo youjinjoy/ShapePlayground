@@ -1,8 +1,9 @@
 import * as THREE from 'three'
 import Experience from '../Experience.js'
 import Light from './Light.js'
-import Button from './Button.js'
+import Buttons from './Buttons.js'
 import GeometryList from './GeometryList.js'
+import Raycaster from './Raycaster.js'
 
 export default class Section
 {
@@ -12,6 +13,10 @@ export default class Section
         this.experience = new Experience()
         this.scene = this.experience.scene
         this.camera = this.experience.camera.instance
+        this.sizes = this.experience.sizes
+
+        this.selectableObjects = this.experience.selectableObjects
+        this.raycaster = new Raycaster()
 
         this.setGeometryList()
 
@@ -54,14 +59,21 @@ export default class Section
     {
         this.gap = 2.5
         this.size = 0.5
-        this.button = new Button(this.geometryList.mesh.position, this.size, this.gap)
+        this.buttons = new Buttons(this.geometryList.mesh.position, this.size, this.gap)
+        this.selectableObjects.push(this.buttons.leftButtonMesh)
+        this.selectableObjects.push(this.buttons.rightButtonMesh)
     }
 
     update()
     {
-        if(this.button)
+        if(this.buttons)
         {
-            this.button.update()
+            this.buttons.update()
+        }
+
+        if(this.raycaster)
+        {
+            this.raycaster.update()
         }
     }
 }

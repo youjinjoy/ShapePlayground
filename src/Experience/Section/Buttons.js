@@ -9,7 +9,7 @@ export default class Section
         this.experience = new Experience()
         this.scene = this.experience.scene
         this.time = this.experience.time
-        
+        this.selectableObjects = this.experience.selectableObjects
 
         this.position = position
         this.size = size
@@ -26,20 +26,22 @@ export default class Section
 
     setGeometry()
     {
-        this.buttonGeometry = new THREE.CylinderGeometry(1,1,0.2,3,1)
+        this.leftButtonGeometry = new THREE.CylinderGeometry(1,1,0.2,3,1)
+        this.rightButtonGeometry = new THREE.CylinderGeometry(1,1,0.2,3,1)
     }
 
     setMaterial()
     {
-        this.buttonMaterial = new THREE.MeshStandardMaterial({color:'cadetblue'})
+        this.leftButtonMaterial = new THREE.MeshStandardMaterial({color:'cadetblue'})
+        this.rightButtonMaterial = new THREE.MeshStandardMaterial({color:'cadetblue'})
     }
 
     setMesh()
     {
-        this.leftButtonMesh = new THREE.Mesh(this.buttonGeometry, this.buttonMaterial)
+        this.leftButtonMesh = new THREE.Mesh(this.leftButtonGeometry, this.leftButtonMaterial)
         this.scene.add(this.leftButtonMesh)
         
-        this.rightButtonMesh = new THREE.Mesh(this.buttonGeometry, this.buttonMaterial)
+        this.rightButtonMesh = new THREE.Mesh(this.rightButtonGeometry, this.rightButtonMaterial)
         this.scene.add(this.rightButtonMesh)
     }
 
