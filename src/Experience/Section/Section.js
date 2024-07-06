@@ -27,7 +27,7 @@ export default class Section
 
     setMaterial()
     {
-        this.material = new THREE.MeshBasicMaterial({color:'red'})
+        this.material = new THREE.MeshBasicMaterial( {color:'red'} )
     }
 
     setMesh()
@@ -40,7 +40,7 @@ export default class Section
 
     setLight()
     {
-        this.light = new Light()
+        this.light = new Light(this.mesh)
         this.light.setAmbientLight()
         this.light.setDirectionalLight()
     }
@@ -56,7 +56,7 @@ export default class Section
     {
         if(this.button)
         {
-        this.button.update()
-    }
+            this.button.update()
+        }
     }
 }

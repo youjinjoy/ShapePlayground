@@ -3,10 +3,12 @@ import Experience from '../Experience'
 
 export default class Light
 {
-    constructor()
+    constructor(target)
     {
         this.experience = new Experience()
         this.scene = this.experience.scene
+
+        this.target = target
     }
 
     setAmbientLight()
@@ -18,8 +20,9 @@ export default class Light
     
     setDirectionalLight()
     {       
-        this.directionalLight = new THREE.DirectionalLight('#ffffff',3)
-        this.directionalLight.position.set(0, 0, 3)
+        this.directionalLight = new THREE.DirectionalLight('#ffffff', 4)
+        this.directionalLight.target = this.target
+        this.directionalLight.position.set(this.target.position.x, this.target.position.y, this.target.position.z + 3)
         this.scene.add(this.directionalLight)
     }
 }
