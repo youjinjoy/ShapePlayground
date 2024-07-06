@@ -35,12 +35,5 @@ body
     padding-left: 10%;
     padding-right: 10%;
 
-    /* pointer-events: none; */
-}
-
-.selecting-section
-{
-    display: flex;
-    width: 90%;
-    justify-content: space-between;
+    pointer-events: none;
 }
