@@ -32,8 +32,8 @@ export default class Section
 
     setMaterial()
     {
-        this.leftButtonMaterial = new THREE.MeshStandardMaterial({color:'cadetblue'})
-        this.rightButtonMaterial = new THREE.MeshStandardMaterial({color:'cadetblue'})
+        this.leftButtonMaterial = new THREE.MeshStandardMaterial({color:'red'})
+        this.rightButtonMaterial = new THREE.MeshStandardMaterial({color:'red'})
     }
 
     setMesh()

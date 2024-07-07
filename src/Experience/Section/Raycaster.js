@@ -13,6 +13,9 @@ export default class Raycaster
 
         this.raycaster = new THREE.Raycaster()
         this.mouse = new THREE.Vector2()
+        this.mouse.x = -1
+        this.mouse.y = -1
+        this.currentIntersect = null
 
         window.addEventListener('mousemove', (event) =>
         {
@@ -25,11 +28,11 @@ export default class Raycaster
     {
         this.raycaster.setFromCamera(this.mouse, this.camera)
         this.intersects = this.raycaster.intersectObjects(this.selectableObjects)    
-
-        for(const intersect of this.intersects)
-        {
-            intersect.object.material.color.set('#0000ff')
-        }
+        
+        // for(const intersect of this.intersects)
+        // {
+        //     intersect.object.material.color.set('#0000ff')
+        // }
     
         for(const object of this.selectableObjects)
         {
@@ -37,6 +40,26 @@ export default class Raycaster
             {
                 object.material.color.set('#ff0000')
             }
+        }
+
+        if(this.intersects.length)
+        {
+            if(!this.currentIntersect)
+            {
+                console.log('mouse enter')
+            }
+    
+            this.currentIntersect = this.intersects[0]
+            this.currentIntersect.object.material.color.set('#0000ff')
+        }
+        else
+        {
+            if(this.currentIntersect)
+            {
+                console.log('mouse leave')
+            }
+            
+            this.currentIntersect = null
         }
     }
 }
