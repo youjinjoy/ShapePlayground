@@ -3,8 +3,10 @@ import Experience from '../Experience.js'
 
 export default class Raycaster
 {
-    constructor()
+    constructor(section)
     {
+        this.section = section
+
         this.experience = new Experience()
         this.scene = this.experience.scene
         this.camera = this.experience.camera.instance
@@ -15,19 +17,44 @@ export default class Raycaster
         this.mouse = new THREE.Vector2()
         this.mouse.x = -1
         this.mouse.y = -1
+
         this.currentIntersect = null
+        this.leftButton =  this.selectableObjects[0]
+        this.rightButton =  this.selectableObjects[1]
 
         window.addEventListener('mousemove', (event) =>
         {
             this.mouse.x = event.clientX / this.sizes.width * 2 - 1
             this.mouse.y = - (event.clientY / this.sizes.height) * 2 + 1        
         })
+
+        window.addEventListener('click', () =>
+        {
+            if(this.currentIntersect)
+            {
+                console.log('click')
+                if(this.currentIntersect.object === this.leftButton)
+                {
+                    this.section.geometryList.current += this.section.geometryList.list.length
+                    this.section.geometryList.current -= 1
+                    this.section.geometryList.current %= 3
+                    this.section.geometryList.updateGeometry()
+                }
+                else if(this.currentIntersect.object === this.rightButton)
+                {
+                    this.section.geometryList.current += 1
+                    this.section.geometryList.current %= 3
+                    this.section.geometryList.updateGeometry()
+                }
+                
+            }
+        })
     }
 
     update()
     {
         this.raycaster.setFromCamera(this.mouse, this.camera)
-        this.intersects = this.raycaster.intersectObjects(this.selectableObjects)    
+        this.intersects = this.raycaster.intersectObjects(this.selectableObjects)
         
         // for(const intersect of this.intersects)
         // {
@@ -58,7 +85,6 @@ export default class Raycaster
             {
                 console.log('mouse leave')
             }
-            
             this.currentIntersect = null
         }
     }

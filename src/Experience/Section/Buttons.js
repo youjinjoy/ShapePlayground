@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import Experience from '../Experience'
 
-export default class Section
+export default class Buttons
 {
     constructor(position, size, gap)
     {
@@ -38,35 +38,35 @@ export default class Section
 
     setMesh()
     {
-        this.leftButtonMesh = new THREE.Mesh(this.leftButtonGeometry, this.leftButtonMaterial)
-        this.scene.add(this.leftButtonMesh)
+        this.leftButton = new THREE.Mesh(this.leftButtonGeometry, this.leftButtonMaterial)
+        this.scene.add(this.leftButton)
         
-        this.rightButtonMesh = new THREE.Mesh(this.rightButtonGeometry, this.rightButtonMaterial)
-        this.scene.add(this.rightButtonMesh)
+        this.rightButton = new THREE.Mesh(this.rightButtonGeometry, this.rightButtonMaterial)
+        this.scene.add(this.rightButton)
     }
 
     setPosition()
     {
-        this.leftButtonMesh.position.set(this.position.x - this.gap, this.position.y, this.position.z)
-        this.rightButtonMesh.position.set(this.position.x + this.gap, this.position.y, this.position.z)
+        this.leftButton.position.set(this.position.x - this.gap, this.position.y, this.position.z)
+        this.rightButton.position.set(this.position.x + this.gap, this.position.y, this.position.z)
     }
 
     setRotation()
     {
-        this.leftButtonMesh.rotation.set(Math.PI * 0.5, -Math.PI * 0.5 , 0)
-        this.rightButtonMesh.rotation.set(Math.PI * 0.5, Math.PI * 0.5 , 0)
+        this.leftButton.rotation.set(Math.PI * 0.5, -Math.PI * 0.5 , 0)
+        this.rightButton.rotation.set(Math.PI * 0.5, Math.PI * 0.5 , 0)
     }
 
     setSize()
     {
-        this.leftButtonMesh.scale.set(this.size, this.size, this.size)
-        this.rightButtonMesh.scale.set(this.size, this.size, this.size)
+        this.leftButton.scale.set(this.size, this.size, this.size)
+        this.rightButton.scale.set(this.size, this.size, this.size)
     }
 
     update()
     {
         this.elapsed = this.time.elapsed
-        this.leftButtonMesh.rotation.set(Math.PI * 0.5 + 0.5 * Math.sin(Math.PI + 0.001 * this.elapsed), -Math.PI * 0.5 , 0)
-        this.rightButtonMesh.rotation.set(Math.PI * 0.5 + 0.2 * Math.sin(0.001 * this.elapsed), Math.PI * 0.5 , 0)
+        this.leftButton.rotation.set(Math.PI * 0.5 + 0.5 * Math.sin(Math.PI + 0.001 * this.elapsed), -Math.PI * 0.5 , 0)
+        this.rightButton.rotation.set(Math.PI * 0.5 + 0.2 * Math.sin(0.001 * this.elapsed), Math.PI * 0.5 , 0)
     }
 }

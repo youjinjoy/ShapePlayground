@@ -16,36 +16,19 @@ export default class Section
         this.sizes = this.experience.sizes
 
         this.selectableObjects = this.experience.selectableObjects
-        this.raycaster = new Raycaster()
-
+        
         this.setGeometryList()
-
+        
         this.setLight()
+        
+        this.setButtons()
 
-        this.setButton()
+        this.raycaster = new Raycaster(this)
     }
 
     setGeometryList()
     {
         this.geometryList = new GeometryList()
-    }
-
-    setGeometry()
-    {
-        this.geometry = new THREE.TorusGeometry(3)
-    }
-
-    setMaterial()
-    {
-        this.material = new THREE.MeshBasicMaterial( {color:'red'} )
-    }
-
-    setMesh()
-    {
-        this.mesh = new THREE.Mesh(this.geometry, this.material)
-        this.mesh.scale.set(0.5, 0.5, 0.5)
-        this.mesh.position.set(3.5, 0, 0)
-        this.scene.add(this.mesh)
     }
 
     setLight()
@@ -55,17 +38,22 @@ export default class Section
         this.light.setDirectionalLight()
     }
 
-    setButton()
+    setButtons()
     {
         this.gap = 2.5
         this.size = 0.5
         this.buttons = new Buttons(this.geometryList.mesh.position, this.size, this.gap)
-        this.selectableObjects.push(this.buttons.leftButtonMesh)
-        this.selectableObjects.push(this.buttons.rightButtonMesh)
+        this.selectableObjects.push(this.buttons.leftButton)
+        this.selectableObjects.push(this.buttons.rightButton)
     }
 
     update()
     {
+        if(this.geometryList.mesh)
+        {
+            this.geometryList.update()
+        }
+
         if(this.buttons)
         {
             this.buttons.update()
@@ -75,5 +63,6 @@ export default class Section
         {
             this.raycaster.update()
         }
+
     }
 }
