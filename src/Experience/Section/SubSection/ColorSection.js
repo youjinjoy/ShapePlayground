@@ -79,8 +79,8 @@ export default class ColorSection
                 
         this.buttons.leftButton.material.dispose()
         this.buttons.rightButton.material.dispose()
-        this.buttons.leftButton.material = this.currentMaterial
-        this.buttons.rightButton.material = this.currentMaterial
+        this.buttons.leftButton.material = this.currentMaterial.clone()
+        this.buttons.rightButton.material = this.currentMaterial.clone()
 
         this.setMesh()
         this.updateColor()

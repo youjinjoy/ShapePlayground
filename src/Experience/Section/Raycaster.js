@@ -94,14 +94,15 @@ export default class Raycaster
                 }
                 else if(this.currentIntersect.object === this.leftButtonPattern)
                 {
-                    // this.section.colorSection.current += 1
-                    // this.section.colorSection.current %= this.section.colorSection.list.length
+                    this.section.patternSection.current += this.section.patternSection.list.length
+                    this.section.patternSection.current -= 1
+                    this.section.patternSection.current %= this.section.patternSection.list.length
                     this.section.patternSection.updatePattern()
                 }
                 else if(this.currentIntersect.object === this.rightButtonPattern)
                 {
-                    // this.section.colorSection.current += 1
-                    // this.section.colorSection.current %= this.section.colorSection.list.length
+                    this.section.patternSection.current += 1
+                    this.section.patternSection.current %= this.section.patternSection.list.length
                     this.section.patternSection.updatePattern()
                 }
             }

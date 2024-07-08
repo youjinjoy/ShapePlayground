@@ -24,7 +24,20 @@ export default class PatternSection
         this.time = this.experience.time
 
         this.currentColor = section.currentColor
-        this.currentPattern = true
+
+
+        this.pattern = new Pattern()
+        this.stripePattern = this.pattern.createStripe()
+        this.stripePattern.minFilter = THREE.NearestFilter
+        this.stripePattern.magFilter = THREE.NearestFilter
+
+        this.list = ['plain','stripe']
+        this.patterns = {
+            'plain' : false,
+            'stripe' : this.stripePattern
+        }
+        this.current = 0
+        this.currentPattern = this.list[this.current]
 
         this.setMesh()
 
@@ -64,6 +77,7 @@ export default class PatternSection
 
         this.currentGeometry = this.section.currentGeometry
         this.setMesh()
+        this.updatePattern()
     }
 
     updateMaterial()
@@ -75,10 +89,14 @@ export default class PatternSection
         }
         
         this.currentMaterial = this.section.colorSection.currentMaterial
+
+        this.buttons.leftButton.material.dispose()
+        this.buttons.rightButton.material.dispose()
         this.buttons.leftButton.material = this.currentMaterial.clone()
         this.buttons.rightButton.material = this.currentMaterial.clone()
         
         this.setMesh()
+        this.updatePattern()
     }
 
     updateColor()
@@ -96,14 +114,18 @@ export default class PatternSection
             this.currentMaterial.dispose()
             this.scene.remove(this.mesh)
         }
-        
-        this.pattern = new Pattern()
-        this.stripePattern = this.pattern.createStripe()
-        this.stripePattern.minFilter = THREE.NearestFilter
-        this.stripePattern.magFilter = THREE.NearestFilter
+    
 
-        this.currentMaterial = this.section.currentMaterial
-        this.currentMaterial.map = this.stripePattern
+        this.currentMaterial = this.section.currentMaterial.clone()
+        
+        this.currentPattern = this.list[this.current]
+        
+        if (this.patterns[this.currentPattern])
+        {
+            this.currentMaterial.map = this.patterns[this.currentPattern]
+        }
+        
+        this.updateColor()
 
         this.setMesh()
     }

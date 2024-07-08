@@ -46,7 +46,6 @@ export default class MaterialSection
                 reflectivity: 1,         // 반사율
                 envMapIntensity: 1       // 환경 맵 강도
               })
-              
         }
 
         this.current = 0

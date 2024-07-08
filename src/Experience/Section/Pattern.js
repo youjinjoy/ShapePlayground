@@ -19,10 +19,11 @@ export default class Pattern
     
         // 검은색 줄무늬
         this.context.fillStyle = '#000000'
-        for (let i = 0; i < this.canvas.width; i += 8) {
+        for (let i = 0; i < this.canvas.width; i += 8)
+        {
             this.context.fillRect(i, 0, 5, this.canvas.height)
         }
     
-        return new THREE.CanvasTexture(this.canvas);
+        return new THREE.CanvasTexture(this.canvas)
     }
 }
