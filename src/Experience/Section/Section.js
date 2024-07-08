@@ -2,11 +2,11 @@ import * as THREE from 'three'
 import Experience from '../Experience.js'
 import Light from './Light.js'
 import Buttons from './Buttons.js'
-import GeometryList from './GeometryList.js'
 import Raycaster from './Raycaster.js'
-import GeometrySection from './GeometrySection.js'
-import MaterialSection from './MaterialSection.js'
-import ColorSection from './ColorSection.js'
+import GeometrySection from './SubSection/GeometrySection.js'
+import MaterialSection from './SubSection/MaterialSection.js'
+import ColorSection from './SubSection/ColorSection.js'
+import PatternSection from './SubSection/PatternSection.js'
 
 export default class Section
 {
@@ -32,8 +32,8 @@ export default class Section
         this.buttonGap = 2.5
         this.buttonSize = 0.5
 
-        this.modelSize = 3
-        this.modelColor = 'red'
+        this.defaultSize = 3
+        this.defaultColor = 'red'
 
         
 
@@ -50,8 +50,8 @@ export default class Section
         this.currentColor = this.colorSection.currentColor
 
         // // Pattern Section
-        // this.patternSection = new PatternSection(this)
-        // this.currentPattern = this.patternSection.currentPattern
+        this.patternSection = new PatternSection(this)
+        this.currentPattern = this.patternSection.currentPattern
 
         // // Final Result
         // this.mesh = new THREE.Mesh(
@@ -106,6 +106,11 @@ export default class Section
         if(this.currentColor)
         {
             this.colorSection.update()
+        }
+
+        if(this.currentPattern)
+        {
+            this.patternSection.update()
         }
 
 

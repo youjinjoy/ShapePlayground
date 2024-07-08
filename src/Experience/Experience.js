@@ -51,16 +51,16 @@ export default class Experience
         window.addEventListener('scroll', () =>
         {
             this.scrollY = window.scrollY
-            this.newSection = Math.round(this.scrollY / this.sizes.height)
-            console.log(this.currentSection, this.newSection)
-            if(this.newSection != this.currentSection)
-            {
-                this.currentSection = this.newSection
-                gsap.to(window, {
-                    duration: 1,
-                    scrollTo: { y: this.newSection * this.sizes.height, autoKill: false }
-                })
-            }
+            // this.newSection = Math.round(this.scrollY / this.sizes.height)
+            // console.log(this.currentSection, this.newSection)
+            // if(this.newSection != this.currentSection)
+            // {
+            //     this.currentSection = this.newSection
+            //     gsap.to(window, {
+            //         duration: 1,
+            //         scrollTo: { y: this.newSection * this.sizes.height, autoKill: false }
+            //     })
+            // }
         })
     }
 

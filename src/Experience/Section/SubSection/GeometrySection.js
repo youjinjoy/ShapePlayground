@@ -1,7 +1,7 @@
 import * as THREE from 'three'
-import Experience from '../Experience.js'
-import Buttons from './Buttons.js'
-import Light from './Light.js'
+import Experience from '../../Experience.js'
+import Buttons from '../Buttons.js'
+import Light from '../Light.js'
 
 export default class GeometrySection
 {
@@ -12,8 +12,8 @@ export default class GeometrySection
         this.buttonGap = this.section.buttonGap
         this.buttonSize = this.section.buttonSize
 
-        this.size = this.section.modelSize
-        this.color = this.section.modelColor
+        this.size = this.section.defaultSize
+        this.color = this.section.defaultColor
 
         this.experience = new Experience()
         this.scene = this.experience.scene
@@ -42,7 +42,7 @@ export default class GeometrySection
 
     setMaterial()
     {
-        this.material = new THREE.MeshStandardMaterial( {color: 'red', wireframe: true} )
+        this.material = new THREE.MeshStandardMaterial( {color: this.color, wireframe: true} )
     }
 
     setMesh()

@@ -18,7 +18,7 @@ export default class Light
         this.directionalLight.position.set(this.target.position.x, this.target.position.y, this.target.position.z + 3)
         this.scene.add(this.directionalLight)
         
-        this.pointLight = new THREE.PointLight('#ffffff', 10)
+        this.pointLight = new THREE.PointLight('#ffffff', 20)
         this.pointLight.position.set(this.target.position.x, this.target.position.y, this.target.position.z + 3)
         this.scene.add(this.pointLight)
     }
