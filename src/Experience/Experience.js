@@ -5,7 +5,10 @@ import Time from './Utils/Time.js'
 import Camera from './Camera.js'
 import Renderer from './Renderer.js'
 import Section from './Section/Section.js'
+import gsap from 'gsap'
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 
+gsap.registerPlugin(ScrollToPlugin)
 let instance = null;
 
 export default class Experience
@@ -40,9 +43,21 @@ export default class Experience
         })
 
         this.scrollY = window.scrollY
+        this.objectsDistance = 9
+        this.currentSection = 0
         window.addEventListener('scroll', () =>
         {
             this.scrollY = window.scrollY
+            this.newSection = Math.round(this.scrollY / this.sizes.height)
+
+            if(this.newSection != this.currentSection)
+            {
+                this.currentSection = this.newSection
+                gsap.to(window, {
+                    duration: 1,
+                    scrollTo: { y: this.newSection * this.sizes.height, autoKill: false }
+                })
+            }
         })
     }
 
@@ -57,7 +72,7 @@ export default class Experience
         this.section.update()
         this.camera.update()
         this.renderer.update()
-        this.camera.instance.position.y = - window.scrollY * 0.01
+        this.camera.instance.position.y = - this.scrollY / this.sizes.height * this.objectsDistance
     }
 
     destroy()

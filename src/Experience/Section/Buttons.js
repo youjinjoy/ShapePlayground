@@ -32,8 +32,8 @@ export default class Buttons
 
     setMaterial()
     {
-        this.leftButtonMaterial = new THREE.MeshStandardMaterial({color:'red'})
-        this.rightButtonMaterial = new THREE.MeshStandardMaterial({color:'red'})
+        this.leftButtonMaterial = new THREE.MeshStandardMaterial({color:'#ffeded'})
+        this.rightButtonMaterial = new THREE.MeshStandardMaterial({color:'#ffeded'})
     }
 
     setMesh()
@@ -66,7 +66,7 @@ export default class Buttons
     update()
     {
         this.elapsed = this.time.elapsed
-        this.leftButton.rotation.set(Math.PI * 0.5 + 0.5 * Math.sin(Math.PI + 0.001 * this.elapsed), -Math.PI * 0.5 , 0)
+        this.leftButton.rotation.set(Math.PI * 0.5 + 0.2 * Math.sin(Math.PI + 0.001 * this.elapsed), -Math.PI * 0.5 , 0)
         this.rightButton.rotation.set(Math.PI * 0.5 + 0.2 * Math.sin(0.001 * this.elapsed), Math.PI * 0.5 , 0)
     }
 }

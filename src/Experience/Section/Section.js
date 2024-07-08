@@ -5,6 +5,7 @@ import Buttons from './Buttons.js'
 import GeometryList from './GeometryList.js'
 import Raycaster from './Raycaster.js'
 import GeometrySection from './GeometrySection.js'
+import MaterialSection from './MaterialSection.js'
 
 export default class Section
 {
@@ -33,13 +34,15 @@ export default class Section
         this.modelSize = 3
         this.modelColor = 'red'
 
+        
+
         // Geometry Section
         this.geometrySection = new GeometrySection(this)
         this.currentGeometry = this.geometrySection.currentGeometry
 
         // // Material Section
-        // this.materialSection = new MaterialSection(this)
-        // this.currentMaterial = this.materialSection.currentMaterial
+        this.materialSection = new MaterialSection(this)
+        this.currentMaterial = this.materialSection.currentMaterial
 
         // // Color Section
         // this.colorSection = new ColorSection(this)
@@ -92,6 +95,11 @@ export default class Section
         if(this.currentGeometry)
         {
             this.geometrySection.update()
+        }
+
+        if(this.currentMaterial)
+        {
+            this.materialSection.update()
         }
 
 

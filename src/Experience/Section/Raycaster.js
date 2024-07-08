@@ -21,6 +21,8 @@ export default class Raycaster
         this.currentIntersect = null
         this.leftButton =  this.selectableObjects[0]
         this.rightButton =  this.selectableObjects[1]
+        this.leftButtonMaterial =  this.selectableObjects[2]
+        this.rightButtonMaterial =  this.selectableObjects[3]
 
         window.addEventListener('mousemove', (event) =>
         {
@@ -39,6 +41,7 @@ export default class Raycaster
                     this.section.geometrySection.current -= 1
                     this.section.geometrySection.current %= 3
                     this.section.geometrySection.updateGeometry()
+                    this.section.materialSection.updateGeometry()
                     console.log(this.section.geometrySection.current)
                 }
                 else if(this.currentIntersect.object === this.rightButton)
@@ -46,6 +49,20 @@ export default class Raycaster
                     this.section.geometrySection.current += 1
                     this.section.geometrySection.current %= 3
                     this.section.geometrySection.updateGeometry()
+                    this.section.materialSection.updateGeometry()
+                }
+                else if(this.currentIntersect.object === this.leftButtonMaterial)
+                {
+                    this.section.materialSection.current += this.section.materialSection.list.length
+                    this.section.materialSection.current -= 1
+                    this.section.materialSection.current %= 3
+                    this.section.materialSection.updateMaterial()
+                }
+                else if(this.currentIntersect.object === this.rightButtonMaterial)
+                {
+                    this.section.materialSection.current += 1
+                    this.section.materialSection.current %= 3
+                    this.section.materialSection.updateMaterial()
                 }
                 
             }

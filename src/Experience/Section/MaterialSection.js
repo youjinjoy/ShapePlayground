@@ -9,6 +9,8 @@ export default class GeometrySection
     {
         this.section = section
 
+        this.currentGeometry = this.section.currentGeometry
+
         this.buttonGap = this.section.buttonGap
         this.buttonSize = this.section.buttonSize
 
@@ -19,7 +21,6 @@ export default class GeometrySection
         this.scene = this.experience.scene
         this.time = this.experience.time
 
-        this.setGeometry()
         this.setMaterial()
         this.setMesh()
 
@@ -27,29 +28,33 @@ export default class GeometrySection
         this.setLight()
     }
 
-    setGeometry()
+    setMaterial()
     {
-        this.list = ['torus', 'sphere', 'cylinder']
-        this.geometries = {
-            'torus' : new THREE.TorusGeometry(this.size - 1, 1),
-            'sphere' : new THREE.SphereGeometry(this.size),
-            'cylinder' : new THREE.CylinderGeometry(this.size, this.size, 5)
+        this.list = ['standard', 'metal', 'rubber']
+        this.materials = {
+            'standard' : new THREE.MeshStandardMaterial( {color: 'red'} ),
+            'metal' : new THREE.MeshStandardMaterial( {color: 'red', metalness: 1, roughness: 0.3} ),
+            'rubber' :  new THREE.MeshPhysicalMaterial({
+                color: 'red',         // 기본 색상
+                metalness: 0,            // 금속성
+                roughness: 0.9,            // 거칠기
+                clearcoat: 1,            // 클리어코트
+                clearcoatRoughness: 0,   // 클리어코트 거칠기
+                reflectivity: 1,         // 반사율
+                envMapIntensity: 1       // 환경 맵 강도
+              })
+              
         }
 
         this.current = 0
-        this.currentGeometry = this.geometries[this.list[this.current]]
-    }
-
-    setMaterial()
-    {
-        this.material = new THREE.MeshStandardMaterial( {color: 'red', wireframe: true} )
+        this.currentMaterial = this.materials[this.list[this.current]]
     }
 
     setMesh()
     {
-        this.mesh = new THREE.Mesh(this.currentGeometry, this.material)
+        this.mesh = new THREE.Mesh(this.currentGeometry, this.currentMaterial)
         this.mesh.scale.set(0.5, 0.5, 0.5)
-        this.mesh.position.set(3.5, 0, 0)
+        this.mesh.position.set(-3.5, -9, 0)
         this.scene.add(this.mesh)
     }
 
@@ -73,9 +78,20 @@ export default class GeometrySection
             this.currentGeometry.dispose()
             this.scene.remove(this.mesh)
         }
+        this.currentGeometry = this.section.currentGeometry
+        this.setMesh()
+    }
+
+    updateMaterial()
+    {
+        if (this.currentMaterial)
+        {
+            this.currentMaterial.dispose()
+            this.scene.remove(this.mesh)
+        }
         
-        this.currentGeometry = this.geometries[this.list[this.current]]
-        this.section.currentGeometry = this.currentGeometry
+        this.currentMaterial = this.materials[this.list[this.current]]
+        this.section.currentMaterial = this.currentMaterial
         
         this.setMesh()
     }
