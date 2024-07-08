@@ -97,6 +97,9 @@ export default class MaterialSection
         this.currentMaterial = this.materials[this.list[this.current]]
         this.section.currentMaterial = this.currentMaterial
         
+        this.buttons.leftButton.material = this.currentMaterial.clone()
+        this.buttons.rightButton.material = this.currentMaterial.clone()
+        
         this.setMesh()
     }
     
@@ -104,7 +107,7 @@ export default class MaterialSection
     {
         this.elapsed = this.time.elapsed
 
-        this.mesh.rotation.set(this.elapsed * 0.0001, this.elapsed * 0.00012, 0)
+        this.mesh.rotation.set(this.elapsed * 0.0001,- this.elapsed * 0.00012, 0)
 
         if(this.buttons)
         {

@@ -28,6 +28,9 @@ export default class Raycaster
         this.leftButtonPattern =  this.selectableObjects[6]
         this.rightButtonPattern =  this.selectableObjects[7]
 
+        this.defaultColor = section.defaultColor
+        this.currentColor = section.defaultColor
+
         window.addEventListener('mousemove', (event) =>
         {
             this.mouse.x = event.clientX / this.sizes.width * 2 - 1
@@ -43,7 +46,7 @@ export default class Raycaster
                 {
                     this.section.geometrySection.current += this.section.geometrySection.list.length
                     this.section.geometrySection.current -= 1
-                    this.section.geometrySection.current %= 3
+                    this.section.geometrySection.current %= this.section.geometrySection.list.length
                     this.section.geometrySection.updateGeometry()
                     this.section.materialSection.updateGeometry()
                     this.section.colorSection.updateGeometry()
@@ -52,7 +55,7 @@ export default class Raycaster
                 else if(this.currentIntersect.object === this.rightButton)
                 {
                     this.section.geometrySection.current += 1
-                    this.section.geometrySection.current %= 3
+                    this.section.geometrySection.current %= this.section.geometrySection.list.length
                     this.section.geometrySection.updateGeometry()
                     this.section.materialSection.updateGeometry()
                     this.section.colorSection.updateGeometry()
@@ -62,7 +65,7 @@ export default class Raycaster
                 {
                     this.section.materialSection.current += this.section.materialSection.list.length
                     this.section.materialSection.current -= 1
-                    this.section.materialSection.current %= 3
+                    this.section.materialSection.current %= this.section.materialSection.list.length
                     this.section.materialSection.updateMaterial()
                     this.section.colorSection.updateMaterial()
                     this.section.patternSection.updateMaterial()
@@ -70,7 +73,7 @@ export default class Raycaster
                 else if(this.currentIntersect.object === this.rightButtonMaterial)
                 {
                     this.section.materialSection.current += 1
-                    this.section.materialSection.current %= 3
+                    this.section.materialSection.current %= this.section.materialSection.list.length
                     this.section.materialSection.updateMaterial()
                     this.section.colorSection.updateMaterial()
                     this.section.patternSection.updateMaterial()
@@ -81,26 +84,26 @@ export default class Raycaster
                     this.section.colorSection.current += this.section.colorSection.list.length
                     this.section.colorSection.current -= 1
                     this.section.colorSection.current %= this.section.colorSection.list.length
-                    this.section.colorSection.updateColor()
+                    this.currentColor = this.section.colorSection.updateColor()
                 }
                 else if(this.currentIntersect.object === this.rightButtonColor)
                 {
                     this.section.colorSection.current += 1
                     this.section.colorSection.current %= this.section.colorSection.list.length
-                    this.section.colorSection.updateColor()
+                    this.currentColor = this.section.colorSection.updateColor()
                 }
-                // else if(this.currentIntersect.object === this.rightButtonPattern)
-                // {
-                //     this.section.colorSection.current += 1
-                //     this.section.colorSection.current %= this.section.colorSection.list.length
-                //     this.section.colorSection.updateColor()
-                // }
-                // else if(this.currentIntersect.object === this.rightButtonPattern)
-                // {
-                //     this.section.colorSection.current += 1
-                //     this.section.colorSection.current %= this.section.colorSection.list.length
-                //     this.section.colorSection.updateColor()
-                // }
+                else if(this.currentIntersect.object === this.leftButtonPattern)
+                {
+                    // this.section.colorSection.current += 1
+                    // this.section.colorSection.current %= this.section.colorSection.list.length
+                    this.section.patternSection.updatePattern()
+                }
+                else if(this.currentIntersect.object === this.rightButtonPattern)
+                {
+                    // this.section.colorSection.current += 1
+                    // this.section.colorSection.current %= this.section.colorSection.list.length
+                    this.section.patternSection.updatePattern()
+                }
             }
         })
     }
@@ -119,7 +122,14 @@ export default class Raycaster
         {
             if(!this.intersects.find(intersect => intersect.object === object))
             {
-                object.material.color.set('#ff0000')
+                if(object === this.rightButtonColor || object === this.leftButtonColor || object === this.leftButtonPattern || object === this.rightButtonPattern)
+                {
+                    object.material.color.set(this.currentColor)
+                }
+                else    
+                {
+                    object.material.color.set(this.defaultColor)
+                }
             }
         }
 
@@ -131,7 +141,7 @@ export default class Raycaster
             }
     
             this.currentIntersect = this.intersects[0]
-            this.currentIntersect.object.material.color.set('#0000ff')
+            this.currentIntersect.object.material.color.set('#ffeded')
         }
         else
         {

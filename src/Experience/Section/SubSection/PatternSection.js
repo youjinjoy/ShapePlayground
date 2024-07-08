@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import Experience from '../../Experience.js'
 import Buttons from '../Buttons.js'
 import Light from '../Light.js'
+import Pattern from '../Pattern.js'
 
 export default class PatternSection
 {
@@ -23,7 +24,6 @@ export default class PatternSection
         this.time = this.experience.time
 
         this.currentColor = section.currentColor
-
         this.currentPattern = true
 
         this.setMesh()
@@ -75,13 +75,43 @@ export default class PatternSection
         }
         
         this.currentMaterial = this.section.colorSection.currentMaterial
+        this.buttons.leftButton.material = this.currentMaterial.clone()
+        this.buttons.rightButton.material = this.currentMaterial.clone()
+        
+        this.setMesh()
+    }
+
+    updateColor()
+    {
+        this.currentMaterial.color.set(this.section.currentColor)
+        // this.buttons.leftButton.material.color.set(this.currentColor)
+        // this.buttons.rightButton.material.color.set(this.currentColor)
+    }
+
+    updatePattern()
+    {
+
+        if (this.currentMaterial)
+        {
+            this.currentMaterial.dispose()
+            this.scene.remove(this.mesh)
+        }
+        
+        this.pattern = new Pattern()
+        this.stripePattern = this.pattern.createStripe()
+        this.stripePattern.minFilter = THREE.NearestFilter
+        this.stripePattern.magFilter = THREE.NearestFilter
+
+        this.currentMaterial = this.section.currentMaterial
+        this.currentMaterial.map = this.stripePattern
+
         this.setMesh()
     }
     
     update()
     {
         this.elapsed = this.time.elapsed
-        this.mesh.rotation.set(this.elapsed * 0.0001, this.elapsed * 0.00012, 0)
+        this.mesh.rotation.set(this.elapsed * 0.0001, -this.elapsed * 0.00012, 0)
 
         if(this.buttons)
         {

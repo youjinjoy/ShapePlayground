@@ -17,6 +17,7 @@ export default class Section
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
         this.camera = this.experience.camera.instance
+        this.resources = this.experience.resources
 
         this.selectableObjects = []
 
@@ -41,18 +42,18 @@ export default class Section
         this.geometrySection = new GeometrySection(this)
         this.currentGeometry = this.geometrySection.currentGeometry
 
-        // // Material Section
+        // Material Section
         this.materialSection = new MaterialSection(this)
         this.currentMaterial = this.materialSection.currentMaterial
 
-        // // Color Section
+        // Color Section
         this.colorSection = new ColorSection(this)
         this.currentColor = this.colorSection.currentColor
 
-        // // Pattern Section
+        // Pattern Section
         this.patternSection = new PatternSection(this)
         this.currentPattern = this.patternSection.currentPattern
-
+        
         // // Final Result
         // this.mesh = new THREE.Mesh(
         //     this.currentGeometry,

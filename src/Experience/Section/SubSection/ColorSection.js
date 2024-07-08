@@ -3,7 +3,7 @@ import Experience from '../../Experience.js'
 import Buttons from '../Buttons.js'
 import Light from '../Light.js'
 
-export default class ColorsSection
+export default class ColorSection
 {
     constructor(section)
     {
@@ -22,7 +22,7 @@ export default class ColorsSection
         this.scene = this.experience.scene
         this.time = this.experience.time
 
-        this.list = ['red','orange','green','blue','indigo','wheat','black']
+        this.list = ['red','orange','green','blue','indigo','wheat','#333']
         this.current = 0
         this.currentColor = this.list[this.current]
         this.currentMaterial.color.set(this.currentColor)
@@ -76,6 +76,12 @@ export default class ColorsSection
         }
         
         this.currentMaterial = this.section.currentMaterial.clone()
+                
+        this.buttons.leftButton.material.dispose()
+        this.buttons.rightButton.material.dispose()
+        this.buttons.leftButton.material = this.currentMaterial
+        this.buttons.rightButton.material = this.currentMaterial
+
         this.setMesh()
         this.updateColor()
     }
@@ -83,11 +89,15 @@ export default class ColorsSection
     updateColor()
     {
         this.currentColor = this.list[this.current]
+
         this.currentMaterial.color.set(this.currentColor)
-
-
+        this.buttons.leftButton.material.color.set(this.currentColor)
+        this.buttons.rightButton.material.color.set(this.currentColor)
 
         this.section.currentColor = this.currentColor
+        this.section.patternSection.updateColor()
+        
+        return this.currentColor
     }
     
     update()
