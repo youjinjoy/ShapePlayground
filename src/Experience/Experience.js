@@ -21,8 +21,6 @@ export default class Experience
         // window.experience = this
 
         this.canvas = _canvas
-        
-        this.selectableObjects = []
 
         this.debug = new Debug()
         this.sizes = new Sizes()
@@ -40,6 +38,12 @@ export default class Experience
         this.time.on("tick", () => {
             this.update()
         })
+
+        this.scrollY = window.scrollY
+        window.addEventListener('scroll', () =>
+        {
+            this.scrollY = window.scrollY
+        })
     }
 
     resize()
@@ -53,6 +57,7 @@ export default class Experience
         this.section.update()
         this.camera.update()
         this.renderer.update()
+        this.camera.instance.position.y = - window.scrollY * 0.01
     }
 
     destroy()

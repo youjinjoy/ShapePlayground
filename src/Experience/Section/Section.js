@@ -4,6 +4,7 @@ import Light from './Light.js'
 import Buttons from './Buttons.js'
 import GeometryList from './GeometryList.js'
 import Raycaster from './Raycaster.js'
+import GeometrySection from './GeometrySection.js'
 
 export default class Section
 {
@@ -11,19 +12,51 @@ export default class Section
     {
         
         this.experience = new Experience()
+        this.sizes = this.experience.sizes
         this.scene = this.experience.scene
         this.camera = this.experience.camera.instance
-        this.sizes = this.experience.sizes
 
-        this.selectableObjects = this.experience.selectableObjects
-        
-        this.setGeometryList()
-        
-        this.setLight()
-        
-        this.setButtons()
+        this.selectableObjects = []
+
+        this.setAmbientLight()
+
+        // Candidate
+        this.currentGeometry = null
+        this.currentMaterial = null
+        this.currentColor = null
+        this.currentPattern = null
+
+        // Common Properties
+        this.buttonGap = 2.5
+        this.buttonSize = 0.5
+
+        this.modelSize = 3
+        this.modelColor = 'red'
+
+        // Geometry Section
+        this.geometrySection = new GeometrySection(this)
+        this.currentGeometry = this.geometrySection.currentGeometry
+
+        // // Material Section
+        // this.materialSection = new MaterialSection(this)
+        // this.currentMaterial = this.materialSection.currentMaterial
+
+        // // Color Section
+        // this.colorSection = new ColorSection(this)
+        // this.currentColor = this.colorSection.currentColor
+
+        // // Pattern Section
+        // this.patternSection = new PatternSection(this)
+        // this.currentPattern = this.patternSection.currentPattern
+
+        // // Final Result
+        // this.mesh = new THREE.Mesh(
+        //     this.currentGeometry,
+        //     this.currentMaterial
+        // )
 
         this.raycaster = new Raycaster(this)
+
     }
 
     setGeometryList()
@@ -47,17 +80,20 @@ export default class Section
         this.selectableObjects.push(this.buttons.rightButton)
     }
 
+    setAmbientLight()
+    {
+        this.ambientLight = new THREE.AmbientLight('#ffffff')
+        this.ambientLight.position.set(0,0,0)
+        this.scene.add(this.ambientLight)
+    }
+
     update()
     {
-        if(this.geometryList.mesh)
+        if(this.currentGeometry)
         {
-            this.geometryList.update()
+            this.geometrySection.update()
         }
 
-        if(this.buttons)
-        {
-            this.buttons.update()
-        }
 
         if(this.raycaster)
         {

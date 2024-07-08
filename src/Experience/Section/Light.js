@@ -10,13 +10,6 @@ export default class Light
 
         this.target = target
     }
-
-    setAmbientLight()
-    {
-        this.ambientLight = new THREE.AmbientLight('#ffffff')
-        this.ambientLight.position.set(0,0,0)
-        this.scene.add(this.ambientLight)
-    }
     
     setDirectionalLight()
     {       

@@ -38,3 +38,9 @@ body
 
     /* pointer-events: none; */
 }
+
+.section-align-right
+{
+    justify-content: end;
+    text-align: right;
+}

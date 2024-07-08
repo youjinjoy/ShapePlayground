@@ -6,12 +6,12 @@ export default class Raycaster
     constructor(section)
     {
         this.section = section
+        this.selectableObjects = section.selectableObjects
 
         this.experience = new Experience()
         this.scene = this.experience.scene
         this.camera = this.experience.camera.instance
         this.sizes = this.experience.sizes
-        this.selectableObjects = this.experience.selectableObjects
 
         this.raycaster = new THREE.Raycaster()
         this.mouse = new THREE.Vector2()
@@ -35,16 +35,17 @@ export default class Raycaster
                 console.log('click')
                 if(this.currentIntersect.object === this.leftButton)
                 {
-                    this.section.geometryList.current += this.section.geometryList.list.length
-                    this.section.geometryList.current -= 1
-                    this.section.geometryList.current %= 3
-                    this.section.geometryList.updateGeometry()
+                    this.section.geometrySection.current += this.section.geometrySection.list.length
+                    this.section.geometrySection.current -= 1
+                    this.section.geometrySection.current %= 3
+                    this.section.geometrySection.updateGeometry()
+                    console.log(this.section.geometrySection.current)
                 }
                 else if(this.currentIntersect.object === this.rightButton)
                 {
-                    this.section.geometryList.current += 1
-                    this.section.geometryList.current %= 3
-                    this.section.geometryList.updateGeometry()
+                    this.section.geometrySection.current += 1
+                    this.section.geometrySection.current %= 3
+                    this.section.geometrySection.updateGeometry()
                 }
                 
             }
