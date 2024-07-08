@@ -6,6 +6,7 @@ import GeometryList from './GeometryList.js'
 import Raycaster from './Raycaster.js'
 import GeometrySection from './GeometrySection.js'
 import MaterialSection from './MaterialSection.js'
+import ColorSection from './ColorSection.js'
 
 export default class Section
 {
@@ -45,8 +46,8 @@ export default class Section
         this.currentMaterial = this.materialSection.currentMaterial
 
         // // Color Section
-        // this.colorSection = new ColorSection(this)
-        // this.currentColor = this.colorSection.currentColor
+        this.colorSection = new ColorSection(this)
+        this.currentColor = this.colorSection.currentColor
 
         // // Pattern Section
         // this.patternSection = new PatternSection(this)
@@ -100,6 +101,11 @@ export default class Section
         if(this.currentMaterial)
         {
             this.materialSection.update()
+        }
+
+        if(this.currentColor)
+        {
+            this.colorSection.update()
         }
 
 

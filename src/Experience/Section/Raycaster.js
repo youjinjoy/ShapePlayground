@@ -23,6 +23,8 @@ export default class Raycaster
         this.rightButton =  this.selectableObjects[1]
         this.leftButtonMaterial =  this.selectableObjects[2]
         this.rightButtonMaterial =  this.selectableObjects[3]
+        this.leftButtonColor =  this.selectableObjects[4]
+        this.rightButtonColor =  this.selectableObjects[5]
 
         window.addEventListener('mousemove', (event) =>
         {
@@ -42,6 +44,7 @@ export default class Raycaster
                     this.section.geometrySection.current %= 3
                     this.section.geometrySection.updateGeometry()
                     this.section.materialSection.updateGeometry()
+                    this.section.colorSection.updateGeometry()
                     console.log(this.section.geometrySection.current)
                 }
                 else if(this.currentIntersect.object === this.rightButton)
@@ -50,6 +53,7 @@ export default class Raycaster
                     this.section.geometrySection.current %= 3
                     this.section.geometrySection.updateGeometry()
                     this.section.materialSection.updateGeometry()
+                    this.section.colorSection.updateGeometry()
                 }
                 else if(this.currentIntersect.object === this.leftButtonMaterial)
                 {
@@ -57,14 +61,31 @@ export default class Raycaster
                     this.section.materialSection.current -= 1
                     this.section.materialSection.current %= 3
                     this.section.materialSection.updateMaterial()
+                    this.section.colorSection.updateMaterial()
+                    console.log("?material")
                 }
                 else if(this.currentIntersect.object === this.rightButtonMaterial)
                 {
                     this.section.materialSection.current += 1
                     this.section.materialSection.current %= 3
                     this.section.materialSection.updateMaterial()
+                    this.section.colorSection.updateMaterial()
+                    console.log("?material")
+
                 }
-                
+                else if(this.currentIntersect.object === this.leftButtonColor)
+                {
+                    this.section.colorSection.current += this.section.colorSection.list.length
+                    this.section.colorSection.current -= 1
+                    this.section.colorSection.current %= this.section.colorSection.list.length
+                    this.section.colorSection.updateColor()
+                }
+                else if(this.currentIntersect.object === this.rightButtonColor)
+                {
+                    this.section.colorSection.current += 1
+                    this.section.colorSection.current %= this.section.colorSection.list.length
+                    this.section.colorSection.updateColor()
+                }
             }
         })
     }

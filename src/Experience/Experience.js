@@ -7,8 +7,11 @@ import Renderer from './Renderer.js'
 import Section from './Section/Section.js'
 import gsap from 'gsap'
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollToPlugin)
+gsap.registerPlugin(ScrollTrigger)
+
 let instance = null;
 
 export default class Experience
@@ -44,12 +47,12 @@ export default class Experience
 
         this.scrollY = window.scrollY
         this.objectsDistance = 9
-        this.currentSection = 0
+        this.currentSection = Math.round(this.scrollY / this.sizes.height)
         window.addEventListener('scroll', () =>
         {
             this.scrollY = window.scrollY
             this.newSection = Math.round(this.scrollY / this.sizes.height)
-
+            console.log(this.currentSection, this.newSection)
             if(this.newSection != this.currentSection)
             {
                 this.currentSection = this.newSection
