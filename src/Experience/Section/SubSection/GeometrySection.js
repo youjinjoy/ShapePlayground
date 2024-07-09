@@ -29,12 +29,12 @@ export default class GeometrySection
 
     setGeometry()
     {
-        this.list = ['torus', 'sphere', 'cylinder','box']
+        this.list = ['torus', 'sphere', 'cylinder']
         this.geometries = {
             'torus' : new THREE.TorusGeometry(this.size - 1, 1),
             'sphere' : new THREE.SphereGeometry(this.size),
             'cylinder' : new THREE.CylinderGeometry(this.size, this.size, 5),
-            'box': new THREE.BoxGeometry(this.size*1.5, this.size*1.5, this.size*1.5, 4, 4, 4)
+            // 'box': new THREE.BoxGeometry(this.size*1.5, this.size*1.5, this.size*1.5, 4, 4, 4)
         }
 
         this.current = 0

@@ -54,11 +54,17 @@ export default class Section
         this.patternSection = new PatternSection(this)
         this.currentPattern = this.patternSection.currentPattern
         
-        // // Final Result
+        // Final Result
         // this.mesh = new THREE.Mesh(
         //     this.currentGeometry,
         //     this.currentMaterial
         // )
+        // this.mesh.material.color.set(this.currentColor)
+        // this.mesh.material.map = this.currentPattern
+        this.mesh = this.patternSection.mesh.clone()
+        this.mesh.position.set(0, -63 - 0.5, 0)
+        this.scene.add(this.mesh)
+        
 
         this.raycaster = new Raycaster(this)
 

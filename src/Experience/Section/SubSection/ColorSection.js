@@ -22,7 +22,7 @@ export default class ColorSection
         this.scene = this.experience.scene
         this.time = this.experience.time
 
-        this.list = ['red','orange','green','blue','indigo','wheat','#333']
+        this.list = ['red','orange','green','#0039a6','#720e9e','wheat','#333']
         this.current = 0
         this.currentColor = this.list[this.current]
         this.currentMaterial.color.set(this.currentColor)

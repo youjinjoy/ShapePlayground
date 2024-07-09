@@ -44,3 +44,18 @@ body
     justify-content: end;
     text-align: right;
 }
+
+.section-align-center
+{
+    justify-content: center;
+    align-items: start;
+    text-align: center;
+
+    padding-top: 10%;
+    box-sizing: border-box;
+}
+
+.section-6
+{
+    height: 200vh;
+}
