@@ -131,16 +131,49 @@ export default class World
     // setTorusBody()
     // {}
 
+    removeObjects(object)
+    {
+        this.world.removeBody(object.body)
+
+        this.scene.remove(object.mesh)
+
+        // if (object.mesh.geometry) {
+        //     object.mesh.geometry.dispose()
+        // }
+        if (object.mesh.material) {
+            if (object.mesh.material.map) object.mesh.material.map.dispose()
+            object.mesh.material.dispose()
+        }
+
+        const index = this.objectsToUpdate.indexOf(object);
+        if (index > -1)
+        {
+            this.objectsToUpdate.splice(index, 1)
+        }
+    }
+
     update()
     {
         if (this.mesh && this.sphereBody && this.experience.scroll.currentSection >= 5 )
         {
             this.world.step(1/60, this.time.delta, 3)
 
+            this.objectsToRemove = []
+
             for(const object of this.objectsToUpdate)
             {
                 object.mesh.position.copy(object.body.position)
                 object.mesh.quaternion.copy(object.body.quaternion)
+
+                if (object.body.position.y <= -90)
+                {
+                    this.objectsToRemove.push(object)
+                }
+            }
+
+            for(const object of this.objectsToRemove)
+            {
+                this.removeObjects(object)
             }
         }
     }
