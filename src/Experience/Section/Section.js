@@ -36,8 +36,6 @@ export default class Section
         this.defaultSize = 3
         this.defaultColor = 'red'
 
-        
-
         // Geometry Section
         this.geometrySection = new GeometrySection(this)
         this.currentGeometry = this.geometrySection.currentGeometry
@@ -55,26 +53,20 @@ export default class Section
         this.currentPattern = this.patternSection.currentPattern
         
         // Final Result
-        // this.mesh = new THREE.Mesh(
-        //     this.currentGeometry,
-        //     this.currentMaterial
-        // )
-        // this.mesh.material.color.set(this.currentColor)
-        // this.mesh.material.map = this.currentPattern
         this.mesh = this.patternSection.mesh.clone()
         this.mesh.material.envMap = this.envMap
         this.mesh.material.envMapIntensity = 30
         this.mesh.position.set(0, -63 - 0.5, 0)
 
-        this.resources.on('ready', () =>
-        {
-            this.setEnvironmentMap()
-        })
+        // this.resources.on('ready', () =>
+        // {
+        //     this.setEnvironmentMap()
+        // })
         
         this.scene.add(this.mesh)
 
         this.finalLight = new THREE.SpotLight('#fff',40)
-        this.finalLight.position.set(0, -63 +1, -5)
+        this.finalLight.position.set(0, -63 + 1, -5)
         this.finalLight.target = this.mesh
 
         this.scene.add(this.finalLight)
