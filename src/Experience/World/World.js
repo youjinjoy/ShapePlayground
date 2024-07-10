@@ -31,7 +31,8 @@ export default class World
         this.world.broadphase = new CANNON.SAPBroadphase(this.world)
         this.world.allowSleep = true
                 
-        this.setFloor(new THREE.Vector3(0,-83,0))
+        this.floorRadius = 20
+        this.setFloor(new THREE.Vector3(0,-83,0), 20)
         this.setFloorLight()
     }
     
@@ -47,9 +48,9 @@ export default class World
         this.scene.add(this.mesh)
     }
 
-    setFloorMesh(position)
+    setFloorMesh(position, radius)
     {
-        this.floorGeometry = new THREE.CylinderGeometry(20,20,1)
+        this.floorGeometry = new THREE.CylinderGeometry(radius,radius,1)
         this.floorMaterial = new THREE.MeshStandardMaterial({ color: '#eee' })
         this.floorMesh = new THREE.Mesh(this.floorGeometry, this.floorMaterial)
 
@@ -60,11 +61,11 @@ export default class World
         this.scene.add(this.floorMesh)
     }
     
-    setFloor(position)
+    setFloor(position, radius)
     {
-        this.setFloorMesh(position)
+        this.setFloorMesh(position, radius)
 
-        this.floorShape = new CANNON.Plane()
+        this.floorShape = new CANNON.Cylinder(radius + 1, radius + 1, 1, 8)
         this.floorBody = new CANNON.Body()
         this.floorBody.mess = 0
         this.floorBody.addShape(this.floorShape)
@@ -74,17 +75,17 @@ export default class World
 
         this.floorBody.material = this.defaultMaterial
 
-        this.scene.add(this.floorDirectionalLight)
-
         this.world.addBody(this.floorBody)
     }
 
     setFloorLight()
     {
-        this.floorDirectionalLight = new THREE.DirectionalLight("#fff",4)
+        this.floorDirectionalLight = new THREE.DirectionalLight("#999", 4)
         this.floorDirectionalLight.position.set(5, -70, 5)
         this.floorDirectionalLight.target = this.floorMesh
         this.floorDirectionalLight.castShadow = true
+        this.floorDirectionalLight.shadow.mapSize.width = 1024
+        this.floorDirectionalLight.shadow.mapSize.height = 1024
 
         this.floorDirectionalLight.shadow.camera.left = -50
         this.floorDirectionalLight.shadow.camera.right = 50
