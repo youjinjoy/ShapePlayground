@@ -62,14 +62,51 @@ export default class Section
         // this.mesh.material.color.set(this.currentColor)
         // this.mesh.material.map = this.currentPattern
         this.mesh = this.patternSection.mesh.clone()
+        this.mesh.material.envMap = this.envMap
+        this.mesh.material.envMapIntensity = 30
         this.mesh.position.set(0, -63 - 0.5, 0)
 
-
+        this.resources.on('ready', () =>
+        {
+            this.setEnvironmentMap()
+        })
+        
         this.scene.add(this.mesh)
 
+        this.finalLight = new THREE.SpotLight('#fff',40)
+        this.finalLight.position.set(0, -63 +1, -5)
+        this.finalLight.target = this.mesh
+
+        this.scene.add(this.finalLight)
         this.raycaster = new Raycaster(this)
 
 
+    }
+
+    setEnvironmentMap()
+    {
+        this.environmentMap = {}
+        this.environmentMap.intensity = 10
+        this.environmentMap.texture = this.resources.items.environmentMapTexture
+        this.environmentMap.texture.colorSpace = THREE.SRGBColorSpace
+        
+        this.scene.environment = this.environmentMap.texture
+        this.scene.environmentIntensity = 10
+
+        this.environmentMap.updateMaterials = () =>
+        {
+            this.scene.traverse((child) =>
+            {
+                if(child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial)
+                {
+                    child.material.envMap = this.environmentMap.texture
+                    child.material.envMapIntensity = this.environmentMap.intensity
+                    child.material.needsUpdate = true
+                }
+            })
+        }
+        console.log(this.scene)
+        this.environmentMap.updateMaterials()
     }
 
     setGeometryList()
