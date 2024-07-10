@@ -32,6 +32,7 @@ export default class World
         this.world.allowSleep = true
                 
         this.setFloor(new THREE.Vector3(0,-83,0))
+        this.setFloorLight()
     }
     
     setMesh()
@@ -40,11 +41,29 @@ export default class World
         
         this.mesh.scale.set(0.5, 0.5, 0.5)
         this.mesh.position.set(0, -63 - 0.5, 0)
+        
+        this.mesh.castShadow = true
+
         this.scene.add(this.mesh)
+    }
+
+    setFloorMesh(position)
+    {
+        this.floorGeometry = new THREE.CylinderGeometry(20,20,1)
+        this.floorMaterial = new THREE.MeshStandardMaterial({ color: '#eee' })
+        this.floorMesh = new THREE.Mesh(this.floorGeometry, this.floorMaterial)
+
+        this.floorMesh.position.set(position.x, position.y-1, position.z)
+
+        this.floorMesh.receiveShadow = true
+
+        this.scene.add(this.floorMesh)
     }
     
     setFloor(position)
     {
+        this.setFloorMesh(position)
+
         this.floorShape = new CANNON.Plane()
         this.floorBody = new CANNON.Body()
         this.floorBody.mess = 0
@@ -55,7 +74,33 @@ export default class World
 
         this.floorBody.material = this.defaultMaterial
 
+        this.scene.add(this.floorDirectionalLight)
+
         this.world.addBody(this.floorBody)
+    }
+
+    setFloorLight()
+    {
+        this.floorDirectionalLight = new THREE.DirectionalLight("#fff",4)
+        this.floorDirectionalLight.position.set(5, -70, 5)
+        this.floorDirectionalLight.target = this.floorMesh
+        this.floorDirectionalLight.castShadow = true
+
+        this.floorDirectionalLight.shadow.camera.left = -50
+        this.floorDirectionalLight.shadow.camera.right = 50
+        this.floorDirectionalLight.shadow.camera.top = 50
+        this.floorDirectionalLight.shadow.camera.bottom = -50
+        this.floorDirectionalLight.shadow.camera.near = 0.5
+        this.floorDirectionalLight.shadow.camera.far = 50
+
+        // this.lightHelper = new THREE.DirectionalLightHelper(this.floorDirectionalLight)
+        // this.scene.add(this.lightHelper)
+
+        // this.shadowCameraHelper = new THREE.CameraHelper(this.floorDirectionalLight.shadow.camera);
+        // this.scene.add(this.shadowCameraHelper)
+
+
+        this.scene.add(this.floorDirectionalLight)
     }
 
     setSphereBody(radius, mass, position)
@@ -69,6 +114,21 @@ export default class World
         })
         this.world.addBody(this.sphereBody)
     }
+
+    // setCylinderBody(radius, height, mass, position)
+    // {
+    //     this.cylinderShape = new CANNON.Cylinder(radius, radius, height)
+    //     this.cylinderBody = new CANNON.Body({
+    //         mass: mass,
+    //         position: new CANNON.Vec3(position.x + 0.1 * Math.random(), position.y + 0.1 * Math.random(), position.z + 0.1 * Math.random()),
+    //         shape: this.cylinderShape,
+    //         material: this.defaultContactMaterial
+    //     })
+    //     this.world.addBody(this.cylinderBody)
+    // }
+
+    // setTorusBody()
+    // {}
 
     update()
     {

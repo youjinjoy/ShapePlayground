@@ -111,7 +111,7 @@ export default class Raycaster
                 if(this.experience.scroll.currentSection >= 5)
                 {
                     this.experience.world.setMesh()
-                    this.experience.world.setSphereBody(this.section.defaultSize/2, 1, this.experience.world.mesh.position)
+                    this.experience.world.setSphereBody(this.section.defaultSize - 2, 1, this.experience.world.mesh.position)
 
                     this.experience.world.objectsToUpdate.push({
                         mesh: this.experience.world.mesh,

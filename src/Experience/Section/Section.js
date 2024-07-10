@@ -68,11 +68,9 @@ export default class Section
         this.finalLight = new THREE.SpotLight('#fff',40)
         this.finalLight.position.set(0, -63 + 1, -5)
         this.finalLight.target = this.mesh
-
+        
         this.scene.add(this.finalLight)
         this.raycaster = new Raycaster(this)
-
-
     }
 
     setEnvironmentMap()
