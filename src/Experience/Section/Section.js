@@ -63,10 +63,12 @@ export default class Section
         // this.mesh.material.map = this.currentPattern
         this.mesh = this.patternSection.mesh.clone()
         this.mesh.position.set(0, -63 - 0.5, 0)
+
+
         this.scene.add(this.mesh)
-        
 
         this.raycaster = new Raycaster(this)
+
 
     }
 
@@ -78,7 +80,6 @@ export default class Section
     setLight()
     {
         this.light = new Light(this.geometryList.mesh)
-        this.light.setAmbientLight()
         this.light.setDirectionalLight()
     }
 

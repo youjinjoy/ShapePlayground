@@ -10,11 +10,11 @@ html
     user-select: none;
 }
 
-/* html,
+html,
 body
 {
-    overflow: hidden;
-} */
+    scrollbar-width: none;
+}
 
 .webgl
 {

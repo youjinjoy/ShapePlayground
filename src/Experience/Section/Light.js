@@ -20,8 +20,6 @@ export default class Light
         
         this.pointLight = new THREE.PointLight('#ffffff', 20)
         this.pointLight.position.set(this.target.position.x - 1, this.target.position.y, this.target.position.z + 3)
-        
-
         this.scene.add(this.pointLight)
     }
 }

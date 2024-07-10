@@ -33,11 +33,13 @@ export default class PatternSection
 
         this.pattern2 = new Pattern()
         this.stripeWidthPattern = this.pattern2.createWidthStripe()
-        this.stripeWidthPattern.minFilter = THREE.NearestFilter
-        this.stripeWidthPattern.magFilter = THREE.NearestFilter
+        // this.stripeWidthPattern.minFilter = THREE.NearestFilter
+        // this.stripeWidthPattern.magFilter = THREE.NearestFilter
         
         this.pattern3 = new Pattern()
         this.diagonalPattern = this.pattern3.createDiagonalGrid()
+        // this.diagonalPattern.minFilter = THREE.NearestFilter
+        // this.diagonalPattern.magFilter = THREE.NearestFilter
 
         this.list = ['plain','stripeHeight','stripeWidth', 'diagonal']
         this.patterns = {
@@ -137,7 +139,26 @@ export default class PatternSection
         
         this.updateColor()
 
+        this.synchronizeFinalMesh()
+        
         this.setMesh()
+    }
+
+    synchronizeFinalMesh()
+    {
+        // Geometry 동기화
+        if (this.section.mesh)
+        {
+            this.scene.remove(this.section.mesh)
+
+            if (this.section.mesh.geometry) this.section.mesh.geometry.dispose()
+            this.section.mesh.geometry = this.currentGeometry
+    
+            if (this.section.mesh.material) this.section.mesh.material.dispose()
+            this.section.mesh.material = this.currentMaterial
+    
+            this.scene.add(this.section.mesh)
+        }
     }
     
     update()

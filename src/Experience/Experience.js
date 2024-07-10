@@ -55,9 +55,10 @@ export default class Experience
         this.currentSection = Math.round(this.scrollY / this.sizes.height)
         this.camera.instance.position.set(0,- this.scrollY / this.sizes.height * this.objectsDistance, 12)
 
+ 
         window.addEventListener('scroll', () =>
         {
-            console.log(this.scrollY / this.sizes.height)
+            // 섹션 별 스크롤 애니메이션
             this.scrollY = window.scrollY
             this.newSection = Math.round(this.scrollY / this.sizes.height)
             if(this.newSection != this.currentSection)
@@ -69,6 +70,7 @@ export default class Experience
                 })
             }
 
+            // 섹션 별 카메라 애니메이션
             if(Math.round(this.scrollY / this.sizes.height) <= 3.5)
             {
                 this.camera.instance.position.y = - this.scrollY / this.sizes.height * this.objectsDistance
