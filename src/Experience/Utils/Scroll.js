@@ -48,6 +48,8 @@ export default class Scroll extends EventEmitter
 
     setProperty()
     {
+        this.newSection = Math.round(this.scrollY / this.sizes.height)
+        
         if (this.scrollY / this.sizes.height <= 5)
         {
             this.progress = (this.scrollY / this.sizes.height - 4)

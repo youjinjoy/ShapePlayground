@@ -11,22 +11,23 @@ export default class World
         this.scene = this.experience.scene
         this.section = this.experience.section
 
+        // this.size = this.section.defaultSize
+
+        // this.geometries = {
+        //     'torus': new THREE.TorusGeometry(this.size - 1, 1),
+        //     'sphere': new THREE.SphereGeometry(this.size),
+        //     'cylinder': new THREE.CylinderGeometry(this.size, this.size, 5),
+        // }
+
         this.world = new CANNON.World()
         this.world.gravity.set(0, - 9.82, 0)
         
-        this.setMesh()
         this.setFloor(new THREE.Vector3(0,-84,0))
-        this.setSphereBody(this.section.defaultSize, 1, this.mesh.position)
     }
     
     setMesh()
     {
-        this.geometry = this.section.currentGeometry
-        this.material = this.section.currentMaterial
-        this.color = this.section.currentColor
-        this.pattern = this.section.currentPattern
-
-        this.mesh = new THREE.Mesh(this.geometry, this.material)
+        this.mesh = this.section.mesh.clone()
         
         this.mesh.scale.set(0.5, 0.5, 0.5)
         this.mesh.position.set(0, -63 - 0.5, 0)
@@ -64,7 +65,6 @@ export default class World
         {
             this.world.step(1/60, this.time.delta, 3)
             this.mesh.position.copy(this.sphereBody.position)
-            // console.log(this.mesh.position)
         }
     }
 }
