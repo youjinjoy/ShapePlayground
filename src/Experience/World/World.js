@@ -11,18 +11,27 @@ export default class World
         this.scene = this.experience.scene
         this.section = this.experience.section
 
-        // this.size = this.section.defaultSize
-
-        // this.geometries = {
-        //     'torus': new THREE.TorusGeometry(this.size - 1, 1),
-        //     'sphere': new THREE.SphereGeometry(this.size),
-        //     'cylinder': new THREE.CylinderGeometry(this.size, this.size, 5),
-        // }
-
         this.world = new CANNON.World()
         this.world.gravity.set(0, - 9.82, 0)
-        
-        this.setFloor(new THREE.Vector3(0,-84,0))
+
+        this.defaultMaterial = new CANNON.Material('default')
+        this.defaultContactMaterial = new CANNON.ContactMaterial(
+            this.defaultMaterial,
+            this.defaultMaterial,
+            {
+                friction: 0.1,
+                restitution: 0.7
+            }
+        )
+        this.world.addContactMaterial(this.defaultContactMaterial)
+        this.world.defaultContactMaterial = this.defaultContactMaterial
+
+        this.objectsToUpdate = []
+
+        this.world.broadphase = new CANNON.SAPBroadphase(this.world)
+        this.world.allowSleep = true
+                
+        this.setFloor(new THREE.Vector3(0,-83,0))
     }
     
     setMesh()
@@ -31,7 +40,6 @@ export default class World
         
         this.mesh.scale.set(0.5, 0.5, 0.5)
         this.mesh.position.set(0, -63 - 0.5, 0)
-        
         this.scene.add(this.mesh)
     }
     
@@ -45,6 +53,8 @@ export default class World
         this.floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(- 1, 0, 0), Math.PI * 0.5)
         this.floorBody.position.set(position.x, position.y, position.z)
 
+        this.floorBody.material = this.defaultMaterial
+
         this.world.addBody(this.floorBody)
     }
 
@@ -53,8 +63,9 @@ export default class World
         this.sphereShape = new CANNON.Sphere(radius)
         this.sphereBody = new CANNON.Body({
             mass: mass,
-            position: new CANNON.Vec3(position.x, position.y, position.z),
-            shape: this.sphereShape
+            position: new CANNON.Vec3(position.x + 0.1 * Math.random(), position.y + 0.1 * Math.random(), position.z + 0.1 * Math.random()),
+            shape: this.sphereShape,
+            material: this.defaultContactMaterial
         })
         this.world.addBody(this.sphereBody)
     }
@@ -64,7 +75,12 @@ export default class World
         if (this.mesh && this.sphereBody && this.experience.scroll.currentSection >= 5 )
         {
             this.world.step(1/60, this.time.delta, 3)
-            this.mesh.position.copy(this.sphereBody.position)
+
+            for(const object of this.objectsToUpdate)
+            {
+                object.mesh.position.copy(object.body.position)
+                object.mesh.quaternion.copy(object.body.quaternion)
+            }
         }
     }
 }
