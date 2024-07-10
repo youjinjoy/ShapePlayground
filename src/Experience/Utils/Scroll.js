@@ -22,8 +22,11 @@ export default class Scroll extends EventEmitter
         
         
         this.objectsDistance = 9
-        this.currentSection = Math.round(window.scrollY / this.sizes.height)
+        this.scrollY = window.scrollY
+        this.currentSection = Math.round(this.scrollY / this.sizes.height)
 
+        // Section5에서 카메라 회전 애니메이션 위함
+        this.setProperty()
         this.animate()
 
         window.addEventListener('scroll', () =>
@@ -39,16 +42,31 @@ export default class Scroll extends EventEmitter
                     scrollTo: { y: this.newSection * this.sizes.height, autoKill: false }
                 })
             }
-
             this.trigger('scroll')
         })
+    }
+
+    setProperty()
+    {
+        if (this.scrollY / this.sizes.height <= 5)
+        {
+            this.progress = (this.scrollY / this.sizes.height - 4)
+            this.angle = this.progress * Math.PI * 2
+            this.radius = 12 + this.progress * 30
+            this.x = this.radius * Math.sin(this.angle)
+            this.z = this.radius * Math.cos(this.angle)
+        }
+        else
+        {
+            this.x = 0
+            this.z = 42
+        }
     }
 
     animate()
     {
         
         this.scrollY = window.scrollY
-        // 섹션 별 카메라 애니메이션
         if(Math.round(this.scrollY / this.sizes.height) <= 3.5)
         {
             this.camera.instance.position.y = - this.scrollY / this.sizes.height * this.objectsDistance
@@ -66,19 +84,19 @@ export default class Scroll extends EventEmitter
         }
         else if(this.scrollY / this.sizes.height <= 5)
         {
-            const progress = (this.scrollY / this.sizes.height - 4)
-            const angle = progress * Math.PI * 2
-
-            // 카메라가 메시 주위를 회전하면서 점점 멀어지게 하기
-            const radius = 12 + progress * 30
-            const x = radius * Math.sin(angle)
-            const z = radius * Math.cos(angle)
-            this.camera.instance.position.set(x, - 63, z)
+            this.progress = (this.scrollY / this.sizes.height - 4)
+            this.angle = this.progress * Math.PI * 2
+            this.radius = 12 + this.progress * 30
+            this.x = this.radius * Math.sin(this.angle)
+            this.z = this.radius * Math.cos(this.angle)
+    
+            this.camera.instance.position.set(this.x, - 63, this.z)
             this.camera.instance.lookAt(0, -63, 0)
+
         }
         else
         {
-            this.camera.instance.position.y = - (this.scrollY / this.sizes.height + 2)* this.objectsDistance
+            this.camera.instance.position.set(this.x, - (this.scrollY / this.sizes.height + 2)* this.objectsDistance, this.z)
             this.camera.instance.rotation.set(0, 0, 0)
             this.camera.instance.lookAt(0, this.camera.instance.position.y, 0)
         }

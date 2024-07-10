@@ -8,15 +8,30 @@ export default class World
     {
         this.experience = new Experience()
         this.time = this.experience.time
+        this.scene = this.experience.scene
         this.section = this.experience.section
-
-        this.mesh = this.section.mesh
 
         this.world = new CANNON.World()
         this.world.gravity.set(0, - 9.82, 0)
         
-        this.setFloor(new THREE.Vector3(0,-72,0))
-        this.setSphereBody(this.section.defaultSize, 1, this.mesh.position )
+        this.setMesh()
+        this.setFloor(new THREE.Vector3(0,-84,0))
+        this.setSphereBody(this.section.defaultSize, 1, this.mesh.position)
+    }
+    
+    setMesh()
+    {
+        this.geometry = this.section.currentGeometry
+        this.material = this.section.currentMaterial
+        this.color = this.section.currentColor
+        this.pattern = this.section.currentPattern
+
+        this.mesh = new THREE.Mesh(this.geometry, this.material)
+        
+        this.mesh.scale.set(0.5, 0.5, 0.5)
+        this.mesh.position.set(0, -63 - 0.5, 0)
+        
+        this.scene.add(this.mesh)
     }
     
     setFloor(position)
@@ -45,7 +60,7 @@ export default class World
 
     update()
     {
-        if (this.mesh && this.sphereBody)
+        if (this.mesh && this.sphereBody && this.experience.scroll.currentSection >= 5 )
         {
             this.world.step(1/60, this.time.delta, 3)
             this.mesh.position.copy(this.sphereBody.position)

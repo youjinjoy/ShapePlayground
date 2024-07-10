@@ -97,7 +97,6 @@ export default class Section
                 }
             })
         }
-        console.log(this.scene)
         this.environmentMap.updateMaterials()
     }
 

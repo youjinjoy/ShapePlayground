@@ -33,13 +33,13 @@ export default class PatternSection
 
         this.pattern2 = new Pattern()
         this.stripeWidthPattern = this.pattern2.createWidthStripe()
-        // this.stripeWidthPattern.minFilter = THREE.NearestFilter
-        // this.stripeWidthPattern.magFilter = THREE.NearestFilter
+        this.stripeWidthPattern.minFilter = THREE.NearestFilter
+        this.stripeWidthPattern.magFilter = THREE.NearestFilter
         
         this.pattern3 = new Pattern()
         this.diagonalPattern = this.pattern3.createDiagonalGrid()
-        // this.diagonalPattern.minFilter = THREE.NearestFilter
-        // this.diagonalPattern.magFilter = THREE.NearestFilter
+        this.diagonalPattern.minFilter = THREE.NearestFilter
+        this.diagonalPattern.magFilter = THREE.NearestFilter
 
         this.list = ['plain','stripeHeight','stripeWidth', 'diagonal']
         this.patterns = {
