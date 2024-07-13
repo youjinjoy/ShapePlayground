@@ -15,10 +15,11 @@ export default class Section
         
         this.experience = new Experience()
         this.sizes = this.experience.sizes
+        this.scroll = this.experience.scroll
         this.scene = this.experience.scene
-        this.camera = this.experience.camera.instance
+        this.camera = this.experience.camera
         this.resources = this.experience.resources
-
+        
         this.selectableObjects = []
 
         this.setAmbientLight()
@@ -71,6 +72,21 @@ export default class Section
         
         this.scene.add(this.finalLight)
         this.raycaster = new Raycaster(this)
+
+        this.scroll.on('sectionChange', (event) => {
+            if (event.currentLocation >= 4)
+            {
+                this.patternSection.mesh.visible = false
+                this.patternSection.buttons.leftButton.visible = false
+                this.patternSection.buttons.rightButton.visible = false
+            }
+            else
+            {
+                this.patternSection.mesh.visible = true
+                this.patternSection.buttons.leftButton.visible = true
+                this.patternSection.buttons.rightButton.visible = true
+            }
+        })
     }
 
     setEnvironmentMap()

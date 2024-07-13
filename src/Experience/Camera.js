@@ -14,20 +14,20 @@ export default class Camera
         this.scene = this.experience.scene
         
         this.objectsDistance = 9
+        this.currentLocation = null
 
         this.setInstance()
         // this.setControls()
 
-        
         this.scroll.on('scroll', (event) =>
         {
+            this.currentLocation = event.currentLocation
             this.updateCameraPosition(event.direction, event.currentSection, event.currentLocation)
         })
 
         this.scroll.on('sectionChange', (event) =>
         {
             if (event.animating) return
-
 
             if (event.direction === "up")
             {
@@ -76,6 +76,7 @@ export default class Camera
     setCameraPosition()
     {
         const currentLocation = window.scrollY / this.sizes.height
+        this.currentLocation = currentLocation
 
         if (currentLocation <= 4)
         {
@@ -122,7 +123,7 @@ export default class Camera
 
     update()
     {
-        console.log(this.instance.rotation)
+        // console.log(this.instance.rotation)
         // this.controls.update();
     }
 
