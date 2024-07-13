@@ -56,7 +56,7 @@ export default class Section
         this.mesh = this.patternSection.mesh.clone()
         this.mesh.material.envMap = this.envMap
         this.mesh.material.envMapIntensity = 30
-        this.mesh.position.set(0, -63 - 0.5, 0)
+        this.mesh.position.set(0, -36 - 0.5, 0)
 
         // this.resources.on('ready', () =>
         // {
@@ -66,7 +66,7 @@ export default class Section
         this.scene.add(this.mesh)
 
         this.finalLight = new THREE.SpotLight('#fff',40)
-        this.finalLight.position.set(0, -63 + 1, -5)
+        this.finalLight.position.set(0, -36 + 1, -5)
         this.finalLight.target = this.mesh
         
         this.scene.add(this.finalLight)

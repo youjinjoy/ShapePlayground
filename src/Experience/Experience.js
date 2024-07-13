@@ -2,15 +2,16 @@ import * as THREE from 'three'
 import Debug from './Utils/Debug.js'
 import Sizes from './Utils/Sizes.js'
 import Time from './Utils/Time.js'
+import Scroll from './Utils/Scroll.js'
 import Resources from './Utils/Resources.js'
+
 import Camera from './Camera.js'
 import Renderer from './Renderer.js'
 import Section from './Section/Section.js'
+import World from './World/World.js'
 
 import sources from './sources.js'
 
-import World from './World/World.js'
-import Scroll from './Utils/Scroll.js'
 
 let instance = null;
 
@@ -31,6 +32,7 @@ export default class Experience
         this.debug = new Debug()
         this.sizes = new Sizes()
         this.time = new Time()
+        this.scroll = new Scroll()
 
         this.scene = new THREE.Scene()
         this.resources = new Resources(sources)
@@ -39,7 +41,6 @@ export default class Experience
         this.section = new Section()
         this.world = new World()
 
-        this.scroll = new Scroll()
 
         this.sizes.on("resize", () => {
             this.resize()
@@ -47,10 +48,6 @@ export default class Experience
 
         this.time.on("tick", () => {
             this.update()
-        })
-
-        this.scroll.on("scroll", () => {
-            this.scroll.animate()
         })
     }
 

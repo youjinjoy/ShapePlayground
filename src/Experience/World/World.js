@@ -32,7 +32,7 @@ export default class World
         this.world.allowSleep = true
                 
         this.floorRadius = 20
-        this.setFloor(new THREE.Vector3(0,-83,0), 20)
+        this.setFloor(new THREE.Vector3(0,-52,0), 20)
         this.setFloorLight()
     }
     
@@ -42,7 +42,7 @@ export default class World
         this.mesh.material= this.section.mesh.material.clone()
         
         this.mesh.scale.set(0.5, 0.5, 0.5)
-        this.mesh.position.set(0, -63 - 0.5, 0)
+        this.mesh.position.set(0, -36 - 0.5, 0)
         
         this.mesh.castShadow = true
 
@@ -82,7 +82,7 @@ export default class World
     setFloorLight()
     {
         this.floorDirectionalLight = new THREE.DirectionalLight("#999", 4)
-        this.floorDirectionalLight.position.set(5, -60, 5)
+        this.floorDirectionalLight.position.set(5, -30, 5)
         this.floorDirectionalLight.target = this.floorMesh
         this.floorDirectionalLight.castShadow = true
         this.floorDirectionalLight.shadow.mapSize.width = 1024
@@ -166,7 +166,7 @@ export default class World
                 object.mesh.position.copy(object.body.position)
                 object.mesh.quaternion.copy(object.body.quaternion)
 
-                if (object.body.position.y <= -90)
+                if (object.body.position.y <= -70)
                 {
                     this.objectsToRemove.push(object)
                 }

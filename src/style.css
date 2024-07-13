@@ -16,6 +16,11 @@ body
     scrollbar-width: none;
 }
 
+body
+{
+    scroll-behavior: smooth;
+}
+
 .webgl
 {
     position: fixed;
@@ -53,4 +58,65 @@ body
 
     padding-top: 10%;
     box-sizing: border-box;
+}
+
+/* 반응형 */
+
+@media (max-width: 1250px) {
+    .section
+    {
+        font-size: 6vmin;
+        padding-left: 8%;
+        padding-right: 8%;
+    }
+}
+
+@media (max-width: 1050px) {
+    .section
+    {
+        font-size: 5vmin;
+    }
+}
+
+@media (max-width: 900px) {
+    .section
+    {
+        font-size: 4vmin;
+    }
+}
+
+@media (max-width: 768px) {
+    .section
+    {
+        font-size: 6vmin;
+        padding-left: 7%;
+        padding-right: 7%;
+    }
+
+    .section-align-left,
+    .section-align-right,
+    .section-align-center
+    {
+        text-align: center;
+        justify-content: center;
+        align-items: start;
+        padding-top: 10%;
+        padding-bottom: 10%;
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 480px) {
+    .section
+    {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .section-align-left,
+    .section-align-right,
+    .section-align-center
+    {
+        padding-top: 20%;
+    }
 }
