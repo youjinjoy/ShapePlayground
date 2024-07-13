@@ -39,6 +39,7 @@ export default class World
     setMesh()
     {
         this.mesh = this.section.mesh.clone()
+        this.mesh.material= this.section.mesh.material.clone()
         
         this.mesh.scale.set(0.5, 0.5, 0.5)
         this.mesh.position.set(0, -63 - 0.5, 0)
@@ -81,7 +82,7 @@ export default class World
     setFloorLight()
     {
         this.floorDirectionalLight = new THREE.DirectionalLight("#999", 4)
-        this.floorDirectionalLight.position.set(5, -70, 5)
+        this.floorDirectionalLight.position.set(5, -60, 5)
         this.floorDirectionalLight.target = this.floorMesh
         this.floorDirectionalLight.castShadow = true
         this.floorDirectionalLight.shadow.mapSize.width = 1024

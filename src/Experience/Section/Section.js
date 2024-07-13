@@ -98,17 +98,6 @@ export default class Section
         this.environmentMap.updateMaterials()
     }
 
-    setGeometryList()
-    {
-        this.geometryList = new GeometryList()
-    }
-
-    setLight()
-    {
-        this.light = new Light(this.geometryList.mesh)
-        this.light.setDirectionalLight()
-    }
-
     setButtons()
     {
         this.gap = 2.5

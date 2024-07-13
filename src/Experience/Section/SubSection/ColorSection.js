@@ -30,7 +30,7 @@ export default class ColorSection
         this.setMesh()
 
         this.setButtons()
-        this.setLight()
+        // this.setLight()
     }
 
 

@@ -54,7 +54,7 @@ export default class PatternSection
         this.setMesh()
 
         this.setButtons()
-        this.setLight()
+        // this.setLight()
     }
 
 

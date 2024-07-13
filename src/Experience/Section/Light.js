@@ -9,11 +9,12 @@ export default class Light
         this.scene = this.experience.scene
 
         this.target = target
+
     }
     
     setDirectionalLight()
     {       
-        this.directionalLight = new THREE.DirectionalLight('#ffffff', 4)
+        this.directionalLight = new THREE.DirectionalLight('#ffffff', 16)
         this.directionalLight.target = this.target
         this.directionalLight.position.set(this.target.position.x + 1, this.target.position.y, this.target.position.z + 3)
         this.scene.add(this.directionalLight)

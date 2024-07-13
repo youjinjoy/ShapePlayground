@@ -26,7 +26,7 @@ export default class MaterialSection
         this.setMesh()
 
         this.setButtons()
-        this.setLight()
+        // this.setLight()
     }
 
     setMaterial()
