@@ -29,6 +29,7 @@ export default class Experience
         // window.experience = this
 
         this.canvas = _canvas
+        this.objectsDistance = 9
 
         this.debug = new Debug()
         this.sizes = new Sizes()
@@ -43,6 +44,7 @@ export default class Experience
         this.section = new Section()
         this.world = new World()
 
+        this.responsive.getMeshPosition()
         this.responsive.updateCamera(this.camera.instance)
         this.responsive.updateWorld(this.world)
         this.responsive.updateSection(this.section)
@@ -61,6 +63,7 @@ export default class Experience
     {
         this.camera.resize()
         this.renderer.resize()
+        this.responsive.getMeshPosition()
         this.responsive.updateCamera(this.camera.instance)
         this.responsive.updateWorld(this.world)
         this.responsive.updateSection(this.section)

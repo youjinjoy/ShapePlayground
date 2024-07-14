@@ -27,6 +27,10 @@ export default class ColorSection
         this.currentColor = this.list[this.current]
         this.currentMaterial.color.set(this.currentColor)
 
+
+        this.responsive = this.experience.responsive
+        this.meshSection = this.responsive.getMeshPosition('color')
+
         this.setMesh()
 
         this.setButtons()
@@ -38,7 +42,7 @@ export default class ColorSection
     {
         this.mesh = new THREE.Mesh(this.currentGeometry, this.currentMaterial)
         this.mesh.scale.set(0.5, 0.5, 0.5)
-        this.mesh.position.set(3.5, -18, 0)
+        this.mesh.position.copy(this.meshSection)
         this.scene.add(this.mesh)
     }
 

@@ -14,7 +14,7 @@ export default class Camera
         this.scroll = this.experience.scroll
         this.scene = this.experience.scene
         
-        this.objectsDistance = 9
+        this.objectsDistance = this.experience.objectsDistance
         this.currentLocation = null
         this.animating = false
 
@@ -48,11 +48,6 @@ export default class Camera
                 }) 
             }
         })
-    }
-
-    getObjectDistance()
-    {
-        return this.objectsDistance
     }
 
     updateCameraPosition()

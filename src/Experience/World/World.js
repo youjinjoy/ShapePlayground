@@ -43,7 +43,7 @@ export default class World
         this.setFloorLight(this.floorLightPosition)
         
         
-        this.objectDistance = this.camera.getObjectDistance()
+        this.objectDistance = this.experience.objectsDistance
         this.responsive.updateWorld(this)
     }
     

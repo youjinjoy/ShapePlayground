@@ -51,6 +51,8 @@ export default class PatternSection
         this.current = 0
         this.currentPattern = this.list[this.current]
 
+        this.responsive = this.experience.responsive
+
         this.setMesh()
 
         this.setButtons()
@@ -62,7 +64,9 @@ export default class PatternSection
     {
         this.mesh = new THREE.Mesh(this.currentGeometry, this.currentMaterial)
         this.mesh.scale.set(0.5, 0.5, 0.5)
-        this.mesh.position.set(-3.5, -27, 0)
+        
+        this.meshSection = this.responsive.getMeshPosition('pattern')
+        this.mesh.position.copy(this.meshSection)
         this.scene.add(this.mesh)
     }
 

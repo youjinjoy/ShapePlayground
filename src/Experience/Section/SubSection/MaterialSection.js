@@ -21,7 +21,8 @@ export default class MaterialSection
         this.experience = new Experience()
         this.scene = this.experience.scene
         this.time = this.experience.time
-
+        this.responsive = this.experience.responsive
+        
         this.setMaterial()
         this.setMesh()
 
@@ -57,7 +58,9 @@ export default class MaterialSection
     {
         this.mesh = new THREE.Mesh(this.currentGeometry, this.currentMaterial)
         this.mesh.scale.set(0.5, 0.5, 0.5)
-        this.mesh.position.set(-3.5, -9, 0)
+        
+        this.meshSection = this.responsive.getMeshPosition('material')
+        this.mesh.position.copy(this.meshSection)
         this.scene.add(this.mesh)
     }
 

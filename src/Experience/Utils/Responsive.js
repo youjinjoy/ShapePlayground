@@ -15,12 +15,40 @@ export default class Responsive
         this.sectionInstance = null
 
         this.gapForMobile = -1
+        this.objectDistance = this.experience.objectsDistance
 
         // this.sizes.on('resize', () => {
         //     this.updateCamera(this.cameraInstance)
         //     this.updateWorld(this.worldInstance)
         //     this.updateSection(this.sectionInstance)
         // })
+    }
+
+    // 크기 별 mesh 위치 조정 함수
+    getMeshPosition(current)
+    {
+        this.meshSections = {
+            'geometry': 0,
+            'material': 1,
+            'color': 2,
+            'pattern': 3
+        }
+        this.currentMeshSection = current ? this.meshSections[current] : Math.round(window.scrollY/this.sizes.height)
+        this.meshGap = 3.5
+
+        // 작은 화면
+        if(window.matchMedia("(max-width: 768px)").matches)
+        {
+            return new THREE.Vector3(0, - this.objectDistance * this.currentMeshSection - 1, 0)
+        }
+        // 큰 화면
+        else
+        {
+            if (this.currentMeshSection >= 4) return false
+            else if (this.currentMeshSection % 2 === 0) return new THREE.Vector3(this.meshGap, -this.objectDistance * this.currentMeshSection, 0)
+            else if (this.currentMeshSection % 2 === 1) return new THREE.Vector3(-this.meshGap, -this.objectDistance * this.currentMeshSection, 0)
+            else return false
+        }
     }
 
     // 카메라 설정 함수

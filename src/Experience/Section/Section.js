@@ -75,7 +75,7 @@ export default class Section
         this.raycaster = new Raycaster(this)
 
         // resize event       
-        this.objectDistance = this.camera.getObjectDistance()
+        this.objectDistance = this.experience.objectsDistance
 
         this.responsive.updateSection(this)
 
