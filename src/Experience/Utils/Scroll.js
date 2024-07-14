@@ -24,8 +24,15 @@ export default class Scroll extends EventEmitter
         this.currentLocation = this.scrollY / this.sizes.height
         this.currentSection = Math.round(this.currentLocation)
         this.animating = false
+        this.direction = null
+
 
         window.addEventListener('wheel', (event) => {
+
+            if (event.deltaY < 0 ) this.direction = "up"
+            if (event.deltaY > 0 ) this.direction = "down"
+            if (event.deltaY === 0 ) this.direction = "no move"
+
             if (this.animating)
             {
                 document.body.style.overflow = 'hidden';
@@ -35,16 +42,12 @@ export default class Scroll extends EventEmitter
             {
                 document.body.style.overflow = ''
             }
-          }, { passive: false }); // passive를 false로 설정해야 preventDefault가 적용됨
+          }, { passive: false, capture: true}); // passive를 false로 설정해야 preventDefault가 적용됨
 
         window.addEventListener('scroll', () =>
         {
             this.scrollY = window.scrollY
             this.newLocation = this.scrollY / this.sizes.height
-
-            this.direction = this.currentLocation === this.newLocation ? "no move" : (this.currentLocation < this.newLocation ? "down" : "up")
-            // this.direction = this.currentLocation < this.newLocation ? "down" : "up"
-            // this.direction = this.currentLocation === this.newLocation ? "no move" : this.direction
 
             this.newSection = Math.round(this.newLocation)
             
@@ -53,6 +56,7 @@ export default class Scroll extends EventEmitter
 
             if (!this.animating)
             {
+                document.body.style.overflow = ''
                 this.trigger('sectionChange', [{
                     direction : this.direction,
                     currentSection : this.currentSection,
@@ -65,48 +69,21 @@ export default class Scroll extends EventEmitter
                 setTimeout(() => {
                     this.animating = false
                 }, 1100)
-            }
 
-            this.trigger('scroll', [{
-                direction : this.direction,
-                currentSection : this.currentSection,
-                currentLocation : this.currentLocation,
-                animating: this.animating
-            }])
-
-
-        })
-
-        this.sizes.on('resize', () => {
-            this.currentSection = Math.round(this.scrollY / this.sizes.height)
-            if(window.matchMedia("(max-width: 480px)").matches)
-            {
-                switch (this.currentSection % 2)
-                {
-                    case 0:
-                        this.camera.instance.position.x = 3.5
-                        break
-                    case 1:
-                        this.camera.instance.position.x = -3.5
-                        break
-                }
-            }
-            else if(window.matchMedia("(max-width: 768px)").matches)
-            {
-                switch (this.currentSection % 2)
-                {
-                    case 0:
-                        this.camera.instance.position.x = 3.5
-                        break
-                    case 1:
-                        this.camera.instance.position.x = -3.5
-                        break
-                }
+                this.trigger('scroll', [{
+                    direction : this.direction,
+                    currentSection : this.currentSection,
+                    currentLocation : this.currentLocation,
+                    animating: this.animating
+                }])
             }
             else
             {
-                this.camera.instance.position.x = 0
+                document.body.style.overflow = 'hidden'
             }
+
+
+
         })
     }
 }

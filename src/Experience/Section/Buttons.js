@@ -51,6 +51,11 @@ export default class Buttons
         this.rightButton.position.set(this.position.x + this.gap, this.position.y, this.position.z)
     }
 
+    updatePosition(position)
+    {
+        this.position = position
+    }
+
     setRotation()
     {
         this.leftButton.rotation.set(Math.PI * 0.5, -Math.PI * 0.5 , 0)

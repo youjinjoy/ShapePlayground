@@ -15,14 +15,17 @@ export default class Camera
         
         this.objectsDistance = 9
         this.currentLocation = null
+        this.animating = false
 
         this.setInstance()
+        this.updateCameraSettings()
         // this.setControls()
 
         this.scroll.on('scroll', (event) =>
         {
             this.currentLocation = event.currentLocation
-            this.updateCameraPosition(event.direction, event.currentSection, event.currentLocation)
+            this.animating = event.animating
+            // this.updateCameraPosition(event.direction, event.currentSection, event.currentLocation)
         })
 
         this.scroll.on('sectionChange', (event) =>
@@ -46,16 +49,22 @@ export default class Camera
         })
     }
 
-    updateCameraPosition(direction, currentSection, currentLocation)
+    getObjectDistance()
     {
-        if (currentLocation <= 4)
+        return this.objectsDistance
+    }
+
+    updateCameraPosition()
+    {
+        const temp = window.scrollY / this.sizes.height
+        if (temp <= 4)
         {
-            this.instance.position.set(0, - currentLocation * this.objectsDistance, 12)
+            this.instance.position.set(0, - temp * this.objectsDistance, 12)
             this.instance.rotation.set(0,0,0)
         }
-        else if (currentLocation <= 5)
+        else if (temp <= 5)
         {
-            this.progress = (currentLocation - 4)
+            this.progress = (temp - 4)
             this.angle = this.progress * Math.PI * 2
             this.radius = 12 + this.progress * 30
             this.x = this.radius * Math.sin(this.angle)
@@ -68,7 +77,7 @@ export default class Camera
         {
             this.x = 0
             this.z = 42
-            this.instance.position.set(this.x, -36 - (currentLocation-5) * 9,this.z)
+            this.instance.position.set(this.x, -36 - (temp-5) * 9,this.z)
             this.instance.rotation.set(0, 0, 0)            
         }
     }
@@ -125,6 +134,7 @@ export default class Camera
     {
         // console.log(this.instance.rotation)
         // this.controls.update();
+        if (this.animating) this.updateCameraPosition()
     }
 
     // 카메라 설정 함수
@@ -133,11 +143,11 @@ export default class Camera
         // 세로가 긴 경우
         if(window.matchMedia("(max-width: 480px)").matches)
         {
-            this.instance.fov = 50
+            this.instance.fov = 55
         }
         else if(window.matchMedia("(max-width: 768px)").matches)
         {
-            this.instance.fov = 40
+            this.instance.fov = 45
         }
         // 가로가 긴 경우
         else if(window.matchMedia("(max-width: 900px)").matches)

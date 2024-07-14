@@ -73,6 +73,27 @@ export default class Section
         this.scene.add(this.finalLight)
         this.raycaster = new Raycaster(this)
 
+        // resize event
+        this.updateResponsiveElements()
+
+        this.sizes.on('resize', () => {
+            this.updateResponsiveElements()
+        })
+
+        // section change event
+        if (this.scroll.currentLocation >= 4)
+        {
+            this.patternSection.mesh.visible = false
+            this.patternSection.buttons.leftButton.visible = false
+            this.patternSection.buttons.rightButton.visible = false
+        }
+        else
+        {
+            this.patternSection.mesh.visible = true
+            this.patternSection.buttons.leftButton.visible = true
+            this.patternSection.buttons.rightButton.visible = true
+        }
+
         this.scroll.on('sectionChange', (event) => {
             if (event.currentLocation >= 4)
             {
@@ -87,6 +108,50 @@ export default class Section
                 this.patternSection.buttons.rightButton.visible = true
             }
         })
+    }
+
+    updateResponsiveElements()
+    {
+        this.objectDistance = this.camera.getObjectDistance()
+
+        if(window.matchMedia("(max-width: 768px)").matches)
+        {
+            this.extra = -1
+
+            this.geometrySection.mesh.position.set(0, 0 + this.extra, 0)
+            this.geometrySection.buttons.updatePosition(new THREE.Vector3(0, 0 + this.extra, 0))
+            this.geometrySection.buttons.setPosition()
+
+            this.materialSection.mesh.position.set(0, - this.objectDistance + this.extra, 0)
+            this.materialSection.buttons.updatePosition(new THREE.Vector3(0, - this.objectDistance + this.extra, 0))
+            this.materialSection.buttons.setPosition()
+
+            this.colorSection.mesh.position.set(0, - this.objectDistance * 2 + this.extra, 0)
+            this.colorSection.buttons.updatePosition(new THREE.Vector3(0, - this.objectDistance * 2 + this.extra, 0))
+            this.colorSection.buttons.setPosition()
+
+            this.patternSection.mesh.position.set(0, - this.objectDistance * 3 + this.extra, 0)
+            this.patternSection.buttons.updatePosition(new THREE.Vector3(0, - this.objectDistance * 3 + this.extra, 0))
+            this.patternSection.buttons.setPosition()
+        }
+        else
+        {
+            this.geometrySection.mesh.position.set(3.5, 0, 0)
+            this.geometrySection.buttons.updatePosition(new THREE.Vector3(3.5, 0, 0))
+            this.geometrySection.buttons.setPosition()
+
+            this.materialSection.mesh.position.set(-3.5, - this.objectDistance, 0)
+            this.materialSection.buttons.updatePosition(new THREE.Vector3(-3.5, - this.objectDistance, 0))
+            this.materialSection.buttons.setPosition()
+
+            this.colorSection.mesh.position.set(3.5, - this.objectDistance * 2, 0)
+            this.colorSection.buttons.updatePosition(new THREE.Vector3(3.5, - this.objectDistance * 2, 0))
+            this.colorSection.buttons.setPosition()
+
+            this.patternSection.mesh.position.set(-3.5, - this.objectDistance * 3, 0)
+            this.patternSection.buttons.updatePosition(new THREE.Vector3(-3.5, - this.objectDistance * 3, 0))
+            this.patternSection.buttons.setPosition()
+        }
     }
 
     setEnvironmentMap()
