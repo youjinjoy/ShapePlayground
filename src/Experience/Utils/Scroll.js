@@ -82,6 +82,10 @@ export default class Scroll extends EventEmitter
                 document.body.style.overflow = 'hidden'
             }
 
+            this.trigger('scrolling', [{
+                currentLocation : this.currentLocation
+            }])
+
 
 
         })

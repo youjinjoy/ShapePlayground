@@ -89,7 +89,8 @@ export default class Section
             this.setVisibility(true)
         }
 
-        this.scroll.on('scroll', (event) => {
+        this.scroll.on('scrolling', (event) =>
+        {
             if (event.currentLocation >= 4)
             {    
                 this.setVisibility(false)
