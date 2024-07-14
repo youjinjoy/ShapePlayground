@@ -29,7 +29,6 @@ export default class ColorSection
 
 
         this.responsive = this.experience.responsive
-        this.meshSection = this.responsive.getMeshPosition('color')
 
         this.setMesh()
 
@@ -42,6 +41,8 @@ export default class ColorSection
     {
         this.mesh = new THREE.Mesh(this.currentGeometry, this.currentMaterial)
         this.mesh.scale.set(0.5, 0.5, 0.5)
+        
+        this.meshSection = this.responsive.getMeshPosition('color')
         this.mesh.position.copy(this.meshSection)
         this.scene.add(this.mesh)
     }
