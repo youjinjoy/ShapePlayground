@@ -43,6 +43,10 @@ export default class Experience
         this.section = new Section()
         this.world = new World()
 
+        this.responsive.updateCamera(this.camera.instance)
+        this.responsive.updateWorld(this.world)
+        this.responsive.updateSection(this.section)
+
 
         this.sizes.on("resize", () => {
             this.resize()
@@ -57,6 +61,9 @@ export default class Experience
     {
         this.camera.resize()
         this.renderer.resize()
+        this.responsive.updateCamera(this.camera.instance)
+        this.responsive.updateWorld(this.world)
+        this.responsive.updateSection(this.section)
     }
 
     update()

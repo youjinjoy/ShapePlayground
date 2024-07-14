@@ -15,12 +15,12 @@ export default class Responsive
         this.sectionInstance = null
 
         this.gapForMobile = -1
-        
-        this.sizes.on('resize', () => {
-            this.updateCamera(this.cameraInstance)
-            this.updateWorld(this.worldInstance)
-            this.updateSection(this.sectionInstance)
-        })
+
+        // this.sizes.on('resize', () => {
+        //     this.updateCamera(this.cameraInstance)
+        //     this.updateWorld(this.worldInstance)
+        //     this.updateSection(this.sectionInstance)
+        // })
     }
 
     // 카메라 설정 함수
@@ -72,14 +72,14 @@ export default class Responsive
 
         if(window.matchMedia("(max-width: 768px)").matches)
         {
-            instance.floorBody.position.y = instance.floorPosition - 5
-            instance.floorMesh.position.y = instance.floorPosition - 5
-            instance.floorDirectionalLight.position.y = instance.floorLightPosition - 5
+            instance.floorBody.position.y = instance.floorPosition - 2
+            instance.floorMesh.position.y = instance.floorPosition - 3
+            instance.floorDirectionalLight.position.y = instance.floorLightPosition - 2
         }
         else
         {
-            instance.floorBody.position.y = instance.floorPosition
-            instance.floorMesh.position.y = instance.floorPosition
+            instance.floorBody.position.y = instance.floorPosition 
+            instance.floorMesh.position.y = instance.floorPosition - 1
             instance.floorDirectionalLight.position.y = instance.floorLightPosition
         }
     }

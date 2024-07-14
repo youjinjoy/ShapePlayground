@@ -33,10 +33,10 @@ export default class World
         this.objectsToUpdate = []
 
         this.world.broadphase = new CANNON.SAPBroadphase(this.world)
-        this.world.allowSleep = true
+        // this.world.allowSleep = true
                 
         this.floorRadius = 20
-        this.floorPosition = -52
+        this.floorPosition = -55
         this.floorLightPosition = -30
 
         this.setFloor(new THREE.Vector3(0,this.floorPosition,0), this.floorRadius)
@@ -69,7 +69,6 @@ export default class World
         this.floorMesh.position.set(position.x, position.y-1, position.z)
 
         this.floorMesh.receiveShadow = true
-
         this.scene.add(this.floorMesh)
     }
     
@@ -166,12 +165,12 @@ export default class World
 
     update()
     {
-        if (this.mesh && this.sphereBody && this.experience.scroll.currentSection >= 5 )
+        if (this.mesh && this.sphereBody && this.experience.scroll.currentLocation >= 4.5 )
         {
             this.world.step(1/60, this.time.delta, 3)
-
+            
             this.objectsToRemove = []
-
+            
             for(const object of this.objectsToUpdate)
             {
                 object.mesh.position.copy(object.body.position)

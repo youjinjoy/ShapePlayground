@@ -81,56 +81,43 @@ export default class Section
 
         // section change event
         if (this.scroll.currentLocation >= 4)
-        {
-            this.patternSection.mesh.visible = false
-            this.patternSection.buttons.leftButton.visible = false
-            this.patternSection.buttons.rightButton.visible = false
+        {    
+            this.setVisibility(false)
         }
         else
-        {
-            this.patternSection.mesh.visible = true
-            this.patternSection.buttons.leftButton.visible = true
-            this.patternSection.buttons.rightButton.visible = true
+        {                
+            this.setVisibility(true)
         }
 
-        this.scroll.on('sectionChange', (event) => {
+        this.scroll.on('scroll', (event) => {
             if (event.currentLocation >= 4)
             {    
-                this.geometrySection.mesh.visible = false
-                this.geometrySection.buttons.leftButton.visible = false
-                this.geometrySection.buttons.rightButton.visible = false
-                
-                this.materialSection.mesh.visible = false
-                this.materialSection.buttons.leftButton.visible = false
-                this.materialSection.buttons.rightButton.visible = false
-
-                this.colorSection.mesh.visible = false
-                this.colorSection.buttons.leftButton.visible = false
-                this.colorSection.buttons.rightButton.visible = false
-
-                this.patternSection.mesh.visible = false
-                this.patternSection.buttons.leftButton.visible = false
-                this.patternSection.buttons.rightButton.visible = false
+                this.setVisibility(false)
             }
             else
             {                
-                this.geometrySection.mesh.visible = true
-                this.geometrySection.buttons.leftButton.visible = true
-                this.geometrySection.buttons.rightButton.visible = true
-                
-                this.materialSection.mesh.visible = true
-                this.materialSection.buttons.leftButton.visible = true
-                this.materialSection.buttons.rightButton.visible = true
-
-                this.colorSection.mesh.visible = true
-                this.colorSection.buttons.leftButton.visible = true
-                this.colorSection.buttons.rightButton.visible = true
-
-                this.patternSection.mesh.visible = true
-                this.patternSection.buttons.leftButton.visible = true
-                this.patternSection.buttons.rightButton.visible = true
+                this.setVisibility(true)
             }
         })
+    }
+
+    setVisibility(visibility)
+    {
+        this.geometrySection.mesh.visible = visibility
+        this.geometrySection.buttons.leftButton.visible = visibility
+        this.geometrySection.buttons.rightButton.visible = visibility
+        
+        this.materialSection.mesh.visible = visibility
+        this.materialSection.buttons.leftButton.visible = visibility
+        this.materialSection.buttons.rightButton.visible = visibility
+
+        this.colorSection.mesh.visible = visibility
+        this.colorSection.buttons.leftButton.visible = visibility
+        this.colorSection.buttons.rightButton.visible = visibility
+
+        this.patternSection.mesh.visible = visibility
+        this.patternSection.buttons.leftButton.visible = visibility
+        this.patternSection.buttons.rightButton.visible = visibility
     }
 
     setEnvironmentMap()
