@@ -8,6 +8,10 @@ export default class World
     {
         this.experience = new Experience()
         this.time = this.experience.time
+        this.sizes = this.experience.sizes
+        this.responsive = this.experience.responsive
+        this.camera = this.experience.camera
+
         this.scene = this.experience.scene
         this.section = this.experience.section
 
@@ -32,8 +36,15 @@ export default class World
         this.world.allowSleep = true
                 
         this.floorRadius = 20
-        this.setFloor(new THREE.Vector3(0,-52,0), 20)
-        this.setFloorLight()
+        this.floorPosition = -52
+        this.floorLightPosition = -30
+
+        this.setFloor(new THREE.Vector3(0,this.floorPosition,0), this.floorRadius)
+        this.setFloorLight(this.floorLightPosition)
+        
+        
+        this.objectDistance = this.camera.getObjectDistance()
+        this.responsive.updateWorld(this)
     }
     
     setMesh()
@@ -79,10 +90,10 @@ export default class World
         this.world.addBody(this.floorBody)
     }
 
-    setFloorLight()
+    setFloorLight(positionY)
     {
         this.floorDirectionalLight = new THREE.DirectionalLight("#999", 4)
-        this.floorDirectionalLight.position.set(5, -30, 5)
+        this.floorDirectionalLight.position.set(5, positionY, 5)
         this.floorDirectionalLight.target = this.floorMesh
         this.floorDirectionalLight.castShadow = true
         this.floorDirectionalLight.shadow.mapSize.width = 1024

@@ -10,6 +10,7 @@ export default class Camera
         this.experience = new Experience()
         this.canvas = this.experience.canvas
         this.sizes = this.experience.sizes
+        this.responsive = this.experience.responsive
         this.scroll = this.experience.scroll
         this.scene = this.experience.scene
         
@@ -18,7 +19,7 @@ export default class Camera
         this.animating = false
 
         this.setInstance()
-        this.updateCameraSettings()
+        this.responsive.updateCamera(this.instance)
         // this.setControls()
 
         this.scroll.on('scroll', (event) =>
@@ -127,7 +128,6 @@ export default class Camera
     resize()
     {
         this.instance.aspect = this.sizes.width / this.sizes.height;
-        this.updateCameraSettings()
     }
 
     update()
@@ -136,42 +136,4 @@ export default class Camera
         // this.controls.update();
         if (this.animating) this.updateCameraPosition()
     }
-
-    // 카메라 설정 함수
-    updateCameraSettings()
-    {
-        // 세로가 긴 경우
-        if(window.matchMedia("(max-width: 480px)").matches)
-        {
-            this.instance.fov = 55
-        }
-        else if(window.matchMedia("(max-width: 768px)").matches)
-        {
-            this.instance.fov = 45
-        }
-        // 가로가 긴 경우
-        else if(window.matchMedia("(max-width: 900px)").matches)
-        {
-            this.instance.fov = 55
-        }
-        else if(window.matchMedia("(max-width: 1050px)").matches)
-        {
-            this.instance.fov = 50
-        }
-        else if(window.matchMedia("(max-width: 1150px)").matches)
-        {
-            this.instance.fov = 45
-        }
-        else if(window.matchMedia("(max-width: 1250px)").matches)
-        {
-            this.instance.fov = 40
-        }
-        else
-        {
-            this.instance.fov = 35 // 큰 화면에서 기본 시야
-        }
-        
-        this.instance.updateProjectionMatrix()
-      }
-  
 }

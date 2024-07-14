@@ -11,6 +11,7 @@ import Section from './Section/Section.js'
 import World from './World/World.js'
 
 import sources from './sources.js'
+import Responsive from './Utils/Responsive.js'
 
 
 let instance = null;
@@ -33,6 +34,7 @@ export default class Experience
         this.sizes = new Sizes()
         this.time = new Time()
         this.scroll = new Scroll()
+        this.responsive = new Responsive()
 
         this.scene = new THREE.Scene()
         this.resources = new Resources(sources)
