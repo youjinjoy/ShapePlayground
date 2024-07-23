@@ -5,8 +5,9 @@ export default class Pattern
     constructor()
     {
         this.canvas = document.createElement('canvas')
-        this.canvas.width = 256
-        this.canvas.height = 256
+        this.canvas.resolution = 512
+        this.canvas.width = this.canvas.resolution
+        this.canvas.height = this.canvas.resolution
 
         this.context = this.canvas.getContext('2d')
     }
@@ -19,9 +20,9 @@ export default class Pattern
     
         // 검은색 줄무늬
         this.context.fillStyle = '#000000'
-        for (let i = 0; i < this.canvas.width; i += 32)
+        for (let i = 0; i < this.canvas.width; i += this.canvas.resolution / 8)
         {
-            this.context.fillRect(i, 0, 16, this.canvas.height)
+            this.context.fillRect(i, 0, this.canvas.resolution / 16, this.canvas.height)
         }
     
         return new THREE.CanvasTexture(this.canvas)
@@ -36,9 +37,9 @@ export default class Pattern
     
         // 검은색 줄무늬
         this.context.fillStyle = '#000000'
-        for (let i = 0; i < this.canvas.height; i += 32)
+        for (let i = 0; i < this.canvas.height; i += this.canvas.resolution / 8)
         {
-            this.context.fillRect(0, i, this.canvas.width, 16)
+            this.context.fillRect(0, i, this.canvas.width, this.canvas.resolution / 16)
         }
     
         return new THREE.CanvasTexture(this.canvas)
@@ -55,8 +56,8 @@ export default class Pattern
     
         // 검은색 사선 격자
         this.context.strokeStyle = '#000000'
-        this.context.lineWidth = 8
-        for (let i = -this.canvas.width; i < this.canvas.width; i += 32)
+        this.context.lineWidth = this.canvas.resolution / 32
+        for (let i = -this.canvas.width; i < this.canvas.width; i += this.canvas.resolution / 8)
         {
             this.context.beginPath()
             this.context.moveTo(i, 0)
